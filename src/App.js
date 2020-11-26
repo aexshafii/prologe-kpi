@@ -22,25 +22,13 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-//const tasks = ["task blabla", "do laundry", "wash horses"];
-
-//const addTask = () => {
-//  const newTask = document.getElementById("task").value;
-//  console.log(newTask);
-//  tasks.push(newTask);
-//
-//  //  const element = document.createElement("div");
-//  //  element.innerHTML = newTask;
-//  //
-//  //  document.getElementById("tasks").appendChild(element);
-//};
 export default function App() {
   const [tasks, setTasks] = useState([
     "task blabla",
     "do laundry",
     "wash horses",
   ]);
-  const [input, setInput] = useState("");
+  // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
 
   // on load get todos from firebase
@@ -57,22 +45,23 @@ export default function App() {
     return unsubscribe;
   }, []);
   // == document.getElementById('task).value
-  const updateInput = (e) => {
-    setInput(e.target.value);
-  };
 
-  const addTask = () => {
-    const newTask = input;
-    setTasks([...tasks, newTask]);
-    console.log([...tasks, newTask]);
-    // firestore collection
-    const tasksRef = firestore.collection("things");
+  // const updateInput = (e) => {
+  //   setInput(e.target.value);
+  // };
 
-    tasksRef.add({
-      taskName: newTask,
-      createdAt: Date.now(),
-    });
-  };
+  // const addTask = () => {
+  //   const newTask = input;
+  //   setTasks([...tasks, newTask]);
+  //   console.log([...tasks, newTask]);
+  //   // firestore collection
+  //   const tasksRef = firestore.collection("things");
+
+  //   tasksRef.add({
+  //     taskName: newTask,
+  //     createdAt: Date.now(),
+  //   });
+  // };
   const [user] = useAuthState(auth);
 
   const onCreate = () => {
@@ -119,8 +108,8 @@ function SignIn() {
   return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 
-function SignOut() {
-  return (
-    auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
-  );
-}
+// function SignOut() {
+//   return (
+//     auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
+//   );
+// }

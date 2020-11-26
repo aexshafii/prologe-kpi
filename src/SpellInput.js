@@ -2,13 +2,14 @@ import React from "react";
 import firebase from "firebase/app";
 
 export const SpellInput = ({ task }) => {
-  const [name, setName] = React.useState(task.taskName);
+  const [taskName, setTaskName] = React.useState(task.taskName);
 
   const onUpdate = () => {
     const db = firebase.firestore();
     db.collection("things")
       .doc(task.id)
-      .set({ ...task, name });
+      .set({ ...task, taskName });
+    console.log({ ...task });
   };
 
   const onDelete = () => {
@@ -19,13 +20,13 @@ export const SpellInput = ({ task }) => {
   return (
     <>
       <input
-        value={name}
+        value={taskName}
         onChange={(e) => {
-          setName(e.target.value);
+          setTaskName(e.target.value);
         }}
       />
-      <button onClick={onUpdate}>Updat</button>
-      <button onClick={onDelete}>Delet</button>
+      <button onClick={onUpdate}>Update</button>
+      <button onClick={onDelete}>Delete</button>
     </>
   );
 };

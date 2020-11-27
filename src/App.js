@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { SpellInput } from "./SpellInput";
+import { Task } from "./Task";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -86,7 +86,7 @@ export default function App() {
             <div id="tasks">
               {tasks.map((task) => (
                 <div key={task.taskName}>
-                  <SpellInput task={task} />
+                  <Task task={task} />
                 </div>
               ))}
               <div> </div>

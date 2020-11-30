@@ -30,7 +30,7 @@ export default function App() {
   // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
   const [newTaskOwner, setNewTaskOwner] = React.useState();
-
+  const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   // on load get todos from firebase
   useEffect(() => {
     const unsubscribe = firestore
@@ -68,7 +68,9 @@ export default function App() {
     db.collection("things").add({
       taskName: newTaskName,
       taskOwner: email,
+      taskDeadline: newTaskDeadline,
       createdAt: Date.now(),
+      userID: uid,
     });
   };
 
@@ -83,31 +85,64 @@ export default function App() {
   }
   console.log(uid);
   console.log(typeof email);
+
+  const completeHandler = () => {
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === task.id) {
+          return {
+            ...task,
+            completed: !task.completed,
+          };
+        }
+        return task;
+      })
+    );
+  };
   return (
     <div className="App">
       <header>
-        <h1>⚛️🔥💬</h1>
+        <h1>Prologe KPI ⚛️🔥💬</h1>
+        <h2>Weekly Goals</h2>
         <SignOut />
       </header>
       <section>
         {user ? (
           <div>
-            <input
-              value={newTaskName}
-              onChange={(e) => setNewTaskName(e.target.value)}
-              id="task"
-            />
+            <label>
+              <input
+                label="hello"
+                value={newTaskName}
+                onChange={(e) => setNewTaskName(e.target.value)}
+                id="task"
+              />
+            </label>
             <input
               value={newTaskOwner}
               defaultValue={email}
               onChange={(e) => setNewTaskOwner(e.target.value)}
               id="Owner"
             />
+            <input
+              value={newTaskDeadline}
+              onChange={(e) => setNewTaskDeadline(e.target.value)}
+              id="deadline"
+              type="date"
+            />
+
             <button onClick={onCreate}>submit</button>
             <div id="tasks">
-              {tasks.map((task, taskOwner) => (
-                <div key={task.taskName}>
-                  <Task task={task} taskOwner={taskOwner} />
+              {tasks.map((task, taskOwner, taskDeadline) => (
+                <div key={task.id}>
+                  <Task
+                    className={`todo-item ${task.completed ? "completed" : ""}`}
+                    task={task}
+                    taskOwner={taskOwner}
+                    taskDeadline={taskDeadline}
+                  />
+                  <button onClick={completeHandler} className="complete-btn">
+                    <i className="fas fa-check"></i>
+                  </button>
                 </div>
               ))}
               <div> </div>

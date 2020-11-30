@@ -4,6 +4,7 @@ import firebase from "firebase/app";
 export const Task = ({ task }) => {
   const [taskName, setTaskName] = React.useState(task.taskName);
   const [taskOwner, setTaskOwner] = React.useState(task.taskOwner);
+  const [taskDeadline, setTaskDeadline] = React.useState(task.taskDeadline);
   // const onUpdate = () => {
   //   const db = firebase.firestore();
   //   db.collection("things")
@@ -25,7 +26,7 @@ export const Task = ({ task }) => {
       //   setTaskName(e.target.value);
       // }}
       >
-        {taskName} {taskOwner}
+        {taskName} {taskOwner} {taskDeadline}
         <button onClick={onDelete}>Delete</button>
       </div>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./App.css";
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -30,6 +30,7 @@ export default function App() {
   ]);
   // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
+  const [newTaskOwner, setNewTaskOwner] = React.useState();
 
   // on load get todos from firebase
   useEffect(() => {
@@ -62,18 +63,36 @@ export default function App() {
   //     createdAt: Date.now(),
   //   });
   // };
-  const [user] = useAuthState(auth);
 
   const onCreate = () => {
     const db = firebase.firestore();
     db.collection("things").add({
       taskName: newTaskName,
+      taskOwner: email,
       createdAt: Date.now(),
     });
   };
 
+  var user = firebase.auth().currentUser;
+  var name, email, photoUrl, uid, emailVerified;
+
+  if (user != null) {
+    name = user.displayName;
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+    uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+  }
+  console.log(uid);
+  console.log(typeof email);
   return (
     <div className="App">
+      <header>
+        <h1>⚛️🔥💬</h1>
+        <SignOut />
+      </header>
       <section>
         {user ? (
           <div>
@@ -82,11 +101,17 @@ export default function App() {
               onChange={(e) => setNewTaskName(e.target.value)}
               id="task"
             />
+            <input
+              value={newTaskOwner}
+              defaultValue={email}
+              onChange={(e) => setNewTaskOwner(e.target.value)}
+              id="Owner"
+            />
             <button onClick={onCreate}>submit</button>
             <div id="tasks">
-              {tasks.map((task) => (
+              {tasks.map((task, taskOwner) => (
                 <div key={task.taskName}>
-                  <Task task={task} />
+                  <Task task={task} taskOwner={taskOwner} />
                 </div>
               ))}
               <div> </div>
@@ -99,7 +124,6 @@ export default function App() {
     </div>
   );
 }
-
 function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -108,8 +132,10 @@ function SignIn() {
   return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 
-// function SignOut() {
-//   return (
-//     auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
-//   );
-// }
+function SignOut() {
+  return (
+    auth.currentUser && (
+      <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
+    )
+  );
+}

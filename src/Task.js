@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 
 export const Task = ({ task }) => {
   const [taskName, setTaskName] = React.useState(task.taskName);
-
+  const [taskOwner, setTaskOwner] = React.useState(task.taskOwner);
   // const onUpdate = () => {
   //   const db = firebase.firestore();
   //   db.collection("things")
@@ -25,8 +25,7 @@ export const Task = ({ task }) => {
       //   setTaskName(e.target.value);
       // }}
       >
-        {taskName}
-
+        {taskName} {taskOwner}
         <button onClick={onDelete}>Delete</button>
       </div>
     </>

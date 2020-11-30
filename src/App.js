@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { Task } from "./Task";
 
 firebase.initializeApp({
@@ -74,13 +73,10 @@ export default function App() {
   };
 
   var user = firebase.auth().currentUser;
-  var name, email, photoUrl, uid, emailVerified;
+  var email, uid;
 
   if (user != null) {
-    name = user.displayName;
     email = user.email;
-    photoUrl = user.photoURL;
-    emailVerified = user.emailVerified;
     uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.

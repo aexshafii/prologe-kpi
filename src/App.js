@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { Task } from "./Task";
-import { Col, Form, InputGroup, FormControl } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -33,7 +33,7 @@ export default function App() {
   // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
   const [newTaskQuantity, setNewTaskQuantity] = React.useState();
-  const [newTaskOwner, setNewTaskOwner] = React.useState();
+  // const [newTaskOwner, setNewTaskOwner] = React.useState();
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   // on load get todos from firebase
   useEffect(() => {
@@ -155,8 +155,6 @@ export default function App() {
                   </Form.Label>
                   <Form.Control
                     type="date"
-                    name="deadline"
-                    placeholder="Date of Birth"
                     value={newTaskDeadline}
                     onChange={(e) => setNewTaskDeadline(e.target.value)}
                     id="deadline"

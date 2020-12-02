@@ -4,6 +4,9 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { Task } from "./Task";
+import { Col, Form } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -104,33 +107,48 @@ export default function App() {
       <header>
         <h1>Prologe KPI ⚛️🔥💬</h1>
         <h2>Weekly Goals</h2>
-        <SignOut />
       </header>
       <section>
         {user ? (
           <div>
-            <label>
-              <input
-                label="hello"
-                value={newTaskName}
-                onChange={(e) => setNewTaskName(e.target.value)}
-                id="task"
-              />
-            </label>
-            <input
-              value={newTaskOwner}
-              defaultValue={email}
-              onChange={(e) => setNewTaskOwner(e.target.value)}
-              id="Owner"
-            />
-            <input
-              value={newTaskDeadline}
-              onChange={(e) => setNewTaskDeadline(e.target.value)}
-              id="deadline"
-              type="date"
-            />
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridCity">
+                  <Form.Label>Goal</Form.Label>
+                  <Form.Control
+                    value={newTaskName}
+                    onChange={(e) => setNewTaskName(e.target.value)}
+                    id="task"
+                  />
+                </Form.Group>
 
-            <button onClick={onCreate}>submit</button>
+                <Form.Group as={Col} controlId="formGridState">
+                  <Form.Label>Owner</Form.Label>
+                  <Form.Control as="select" defaultValue={email}>
+                    <option>{email}</option>
+                    <option>...</option>
+                  </Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId="dob">
+                  <Form.Label>Select Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="dob"
+                    placeholder="Date of Birth"
+                    value={newTaskDeadline}
+                    onChange={(e) => setNewTaskDeadline(e.target.value)}
+                    id="deadline"
+                    type="date"
+                  />
+                </Form.Group>
+              </Form.Row>
+
+              <Button variant="primary" type="submit" onClick={onCreate}>
+                Submit
+              </Button>
+            </Form>
+
             <div id="tasks">
               {tasks.map((task, taskOwner, taskDeadline) => (
                 <div key={task.id}>
@@ -145,7 +163,6 @@ export default function App() {
                   </button>
                 </div>
               ))}
-              <div> </div>
             </div>
           </div>
         ) : (
@@ -163,10 +180,10 @@ function SignIn() {
   return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 
-function SignOut() {
-  return (
-    auth.currentUser && (
-      <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
-    )
-  );
-}
+// function SignOut() {
+//   return (
+//     auth.currentUser && (
+//       <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
+//     )
+//   );
+// }

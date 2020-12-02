@@ -105,8 +105,8 @@ export default function App() {
   return (
     <div className="App">
       <header>
-        <h1>Prologe KPI ⚛️🔥💬</h1>
-        <h2>Weekly Goals</h2>
+        <h1 className="mt-5">Prologe KPI ⚛️</h1>
+        <h2 className="mt-5">Goals</h2>
       </header>
       <section>
         {user ? (
@@ -161,6 +161,10 @@ export default function App() {
                 </Col>
               </Form.Row>
             </Form>
+            <h4 style={{ color: "purple" }} className="mt-5">
+              {" "}
+              This Week
+            </h4>
             <div id="tasks">
               {tasks.map((task, taskOwner, taskDeadline) => (
                 <div key={task.id}>

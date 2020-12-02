@@ -185,7 +185,7 @@ export default function App() {
                     taskOwner={taskOwner}
                     taskDeadline={taskDeadline}
                   />
-                  <button onClick={completeHandler} className="complete-btn">
+                  <button className="complete-btn">
                     <i className="fas fa-check"></i>
                   </button>
                 </div>

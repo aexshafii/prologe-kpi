@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { Task } from "./Task";
-import { Col, Form } from "react-bootstrap";
+import { Col, Form, InputGroup, FormControl } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -112,43 +112,56 @@ export default function App() {
         {user ? (
           <div>
             <Form>
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridCity">
-                  <Form.Label>Goal</Form.Label>
+              <Form.Row className="align-items-center">
+                <Col xs="auto">
+                  <Form.Label style={{ fontWeight: "bold" }}>Goal</Form.Label>
                   <Form.Control
                     value={newTaskName}
                     onChange={(e) => setNewTaskName(e.target.value)}
                     id="task"
+                    style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
+                    type="text"
                   />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridState">
-                  <Form.Label>Owner</Form.Label>
-                  <Form.Control as="select" defaultValue={email}>
+                </Col>
+                <Col xs="auto">
+                  <Form.Label style={{ fontWeight: "bold" }}>Owner</Form.Label>
+                  <Form.Control
+                    as="select"
+                    defaultValue={email}
+                    style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
+                    id="email"
+                  >
                     <option>{email}</option>
                     <option>...</option>
                   </Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId="dob">
-                  <Form.Label>Select Date</Form.Label>
+                </Col>
+                <Col xs="auto">
+                  <Form.Label style={{ fontWeight: "bold" }}>
+                    Select Date
+                  </Form.Label>
                   <Form.Control
                     type="date"
-                    name="dob"
+                    name="deadline"
                     placeholder="Date of Birth"
                     value={newTaskDeadline}
                     onChange={(e) => setNewTaskDeadline(e.target.value)}
                     id="deadline"
                     type="date"
+                    style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
                   />
-                </Form.Group>
+                </Col>
+                <Col xs="auto">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={onCreate}
+                    style={{ marginTop: "32px" }}
+                  >
+                    Add
+                  </Button>
+                </Col>
               </Form.Row>
-
-              <Button variant="primary" type="submit" onClick={onCreate}>
-                Submit
-              </Button>
             </Form>
-
             <div id="tasks">
               {tasks.map((task, taskOwner, taskDeadline) => (
                 <div key={task.id}>

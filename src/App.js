@@ -153,7 +153,6 @@ export default function App() {
                 <Col xs="auto">
                   <Button
                     variant="primary"
-                    type="submit"
                     onClick={onCreate}
                     style={{ marginTop: "32px" }}
                   >

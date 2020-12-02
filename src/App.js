@@ -91,19 +91,19 @@ export default function App() {
   console.log(uid);
   console.log(typeof email);
 
-  const completeHandler = () => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === task.id) {
-          return {
-            ...task,
-            completed: !task.completed,
-          };
-        }
-        return task;
-      })
-    );
-  };
+  // const completeHandler = () => {
+  //   setTasks(
+  //     tasks.map((task) => {
+  //       if (task.id === task.id) {
+  //         return {
+  //           ...task,
+  //           completed: !task.completed,
+  //         };
+  //       }
+  //       return task;
+  //     })
+  //   );
+  // };
   return (
     <div className="App">
       <header>

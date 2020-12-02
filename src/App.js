@@ -158,7 +158,6 @@ export default function App() {
                     value={newTaskDeadline}
                     onChange={(e) => setNewTaskDeadline(e.target.value)}
                     id="deadline"
-                    type="date"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
                   />
                 </Col>

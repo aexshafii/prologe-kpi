@@ -32,6 +32,7 @@ export default function App() {
   ]);
   // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
+  const [newTaskQuantity, setNewTaskQuantity] = React.useState();
   const [newTaskOwner, setNewTaskOwner] = React.useState();
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   // on load get todos from firebase
@@ -74,6 +75,7 @@ export default function App() {
       taskDeadline: newTaskDeadline,
       createdAt: Date.now(),
       userID: uid,
+      quantity: newTaskQuantity,
     });
   };
 
@@ -118,6 +120,18 @@ export default function App() {
                   <Form.Control
                     value={newTaskName}
                     onChange={(e) => setNewTaskName(e.target.value)}
+                    id="task"
+                    style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
+                    type="text"
+                  />
+                </Col>
+                <Col xs="auto">
+                  <Form.Label style={{ fontWeight: "bold" }}>
+                    Quantity
+                  </Form.Label>
+                  <Form.Control
+                    value={newTaskQuantity}
+                    onChange={(e) => setNewTaskQuantity(e.target.value)}
                     id="task"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
                     type="text"

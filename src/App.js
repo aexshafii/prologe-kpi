@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { Task } from "./Task";
-import { Col, Form } from "react-bootstrap";
+import { Col, Form, Row, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -185,9 +185,6 @@ export default function App() {
                     taskOwner={taskOwner}
                     taskDeadline={taskDeadline}
                   />
-                  <button className="complete-btn">
-                    <i className="fas fa-check"></i>
-                  </button>
                 </div>
               ))}
             </div>
@@ -214,3 +211,6 @@ function SignIn() {
 //     )
 //   );
 // }
+// // <button className="complete-btn">
+// <i className="fas fa-check"></i>
+// </button>

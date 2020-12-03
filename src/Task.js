@@ -1,5 +1,6 @@
 import React from "react";
 import firebase from "firebase/app";
+import { Col, Container, Row } from "react-bootstrap";
 
 export const Task = ({ task }) => {
   const [taskName] = React.useState(task.taskName);
@@ -27,14 +28,57 @@ export const Task = ({ task }) => {
 
   return (
     <>
-      <div
-      // value={taskName}
-      // onChange={(e) => {
-      //   setTaskName(e.target.value);
-      // }}
-      >
-        {taskName} {taskQuantity} {taskOwner} {taskDeadline}
-        <button onClick={onDelete}>Delete</button>
+      <div>
+        <Container
+          style={{
+            marginLeft: "0px",
+          }}
+        >
+          <Row className="mt-1">
+            <Col
+              style={{
+                backgroundColor: "#E8E8E8",
+                fontSize: "20px",
+              }}
+            >
+              {" "}
+              {taskName}
+            </Col>
+            <Col
+              style={{
+                backgroundColor: "#E8E8E8",
+                marginLeft: "5px",
+                fontSize: "20px",
+              }}
+            >
+              {" "}
+              {taskQuantity}{" "}
+            </Col>
+            <Col
+              style={{
+                backgroundColor: "#E8E8E8",
+                marginLeft: "5px",
+                fontSize: "20px",
+              }}
+            >
+              {" "}
+              {taskOwner}
+            </Col>
+            <Col
+              style={{
+                backgroundColor: "#E8E8E8",
+                marginLeft: "5px",
+                fontSize: "20px",
+              }}
+            >
+              {" "}
+              {taskDeadline}
+            </Col>
+            <Col>
+              <button onClick={onDelete}>Delete</button>
+            </Col>
+          </Row>
+        </Container>
       </div>
     </>
   );

@@ -88,8 +88,22 @@ export default function App() {
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.
   }
-  console.log(uid);
-  console.log(typeof email);
+
+  function updateUserInfo() {
+    console.log(uid);
+    const userData = { lastLoginTime: new Date() };
+    return firebase.firestore().doc(`/users/${uid}`).set(userData);
+  }
+  updateUserInfo();
+  function SignIn() {
+    const signInWithGoogle = () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).then(function () {
+        return updateUserInfo();
+      });
+    };
+    return <button onClick={signInWithGoogle}>Sign in with Google</button>;
+  }
 
   // const completeHandler = () => {
   //   setTasks(
@@ -195,13 +209,6 @@ export default function App() {
       </section>
     </div>
   );
-}
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
-  return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 
 // function SignOut() {

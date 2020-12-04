@@ -90,7 +90,6 @@ export default function App() {
   }
 
   function updateUserInfo() {
-    console.log(uid);
     const userData = { lastLoginTime: new Date() };
     return firebase.firestore().doc(`/users/${uid}`).set(userData);
   }

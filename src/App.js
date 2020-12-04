@@ -88,12 +88,6 @@ export default function App() {
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.
   }
-
-  function updateUserInfo() {
-    const userData = { lastLoginTime: new Date() };
-    return firebase.firestore().doc(`/users/${uid}`).set(userData);
-  }
-  updateUserInfo();
   function SignIn() {
     const signInWithGoogle = () => {
       const provider = new firebase.auth.GoogleAuthProvider();
@@ -103,6 +97,17 @@ export default function App() {
     };
     return <button onClick={signInWithGoogle}>Sign in with Google</button>;
   }
+
+  function updateUserInfo() {
+    console.log(email);
+
+    const userData = { lastLoginTime: new Date() };
+    return firebase
+      .firestore()
+      .doc(`/users/${uid}`)
+      .set(userData, { merge: true });
+  }
+  updateUserInfo();
 
   // const completeHandler = () => {
   //   setTasks(

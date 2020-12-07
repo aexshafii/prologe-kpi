@@ -80,14 +80,17 @@ export default function App() {
   };
 
   var user = firebase.auth().currentUser;
-  var email, uid;
+  var email, uid, emailVerified;
 
   if (user != null) {
+    updateUserInfo();
     email = user.email;
+    emailVerified = user.emailVerified;
     uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.
   }
+
   function SignIn() {
     const signInWithGoogle = () => {
       const provider = new firebase.auth.GoogleAuthProvider();
@@ -99,15 +102,18 @@ export default function App() {
   }
 
   function updateUserInfo() {
-    console.log(email);
+    console.log(user.email);
+    console.log(user.uid);
+    const userData = {
+      lastLoginTime: new Date(),
+      email: user.email,
+    };
 
-    const userData = { lastLoginTime: new Date() };
     return firebase
       .firestore()
-      .doc(`/users/${uid}`)
+      .doc(`/users/${user.uid}`)
       .set(userData, { merge: true });
   }
-  updateUserInfo();
 
   // const completeHandler = () => {
   //   setTasks(

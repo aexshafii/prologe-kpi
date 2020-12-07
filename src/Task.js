@@ -71,7 +71,6 @@ export const Task = ({ task }) => {
                 fontSize: "20px",
               }}
             >
-              {" "}
               {taskDeadline}
             </Col>
             <Col>

@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { Task } from "./Task";
-import { Col, Form, Row, Container } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -152,7 +152,7 @@ export default function App() {
                     onChange={(e) => setNewTaskQuantity(e.target.value)}
                     id="task"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
-                    type="text"
+                    type="number"
                   />
                 </Col>
                 <Col xs="auto">

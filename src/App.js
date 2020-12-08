@@ -48,24 +48,6 @@ export default function App() {
       });
     return unsubscribe;
   }, []);
-  // == document.getElementById('task).value
-
-  // const updateInput = (e) => {
-  //   setInput(e.target.value);
-  // };
-
-  // const addTask = () => {
-  //   const newTask = input;
-  //   setTasks([...tasks, newTask]);
-  //   console.log([...tasks, newTask]);
-  //   // firestore collection
-  //   const tasksRef = firestore.collection("things");
-
-  //   tasksRef.add({
-  //     taskName: newTask,
-  //     createdAt: Date.now(),
-  //   });
-  // };
 
   const onCreate = () => {
     const db = firebase.firestore();
@@ -80,15 +62,14 @@ export default function App() {
   };
 
   var user = firebase.auth().currentUser;
-  var email, uid, emailVerified;
+  var email, uid;
 
   if (user != null) {
-    updateUserInfo();
     email = user.email;
-    emailVerified = user.emailVerified;
     uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.
+    updateUserInfo();
   }
 
   function SignIn() {
@@ -100,34 +81,31 @@ export default function App() {
     };
     return <button onClick={signInWithGoogle}>Sign in with Google</button>;
   }
+  function RetrieveUsers() {
+    firestore
+      .collection("users")
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data().email);
+        });
+      });
+  }
+  RetrieveUsers();
 
   function updateUserInfo() {
-    console.log(user.email);
-    console.log(user.uid);
     const userData = {
       lastLoginTime: new Date(),
       email: user.email,
     };
-
+    console.log("runs");
     return firebase
       .firestore()
       .doc(`/users/${user.uid}`)
       .set(userData, { merge: true });
   }
 
-  // const completeHandler = () => {
-  //   setTasks(
-  //     tasks.map((task) => {
-  //       if (task.id === task.id) {
-  //         return {
-  //           ...task,
-  //           completed: !task.completed,
-  //         };
-  //       }
-  //       return task;
-  //     })
-  //   );
-  // };
   return (
     <div className="App">
       <header>
@@ -231,3 +209,46 @@ export default function App() {
 // // <button className="complete-btn">
 // <i className="fas fa-check"></i>
 // </button>
+// useEffect(() => {
+//   const unsubscribe = firestore.collection("users").onSnapshot((snapshot) => {
+//     const postData = [];
+//     snapshot.forEach((doc) => postData.push({ ...doc.data(), id: doc.id }));
+//     console.log(postData); // <------
+
+//     setPosts(postData);
+//   });
+//   return unsubscribe;
+// }, []);
+
+// const completeHandler = () => {
+//   setTasks(
+//     tasks.map((task) => {
+//       if (task.id === task.id) {
+//         return {
+//           ...task,
+//           completed: !task.completed,
+//         };
+//       }
+//       return task;
+//     })
+//   );
+// };
+
+// == document.getElementById('task).value
+
+// const updateInput = (e) => {
+//   setInput(e.target.value);
+// };
+
+// const addTask = () => {
+//   const newTask = input;
+//   setTasks([...tasks, newTask]);
+//   console.log([...tasks, newTask]);
+//   // firestore collection
+//   const tasksRef = firestore.collection("things");
+
+//   tasksRef.add({
+//     taskName: newTask,
+//     createdAt: Date.now(),
+//   });
+// };

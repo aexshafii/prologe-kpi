@@ -21,9 +21,6 @@ firebase.initializeApp({
   measurementId: "G-LEYP24X6ZJ",
 });
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
-
 export default function App() {
   const [tasks, setTasks] = useState([
     "task blabla",
@@ -53,24 +50,11 @@ export default function App() {
     const db = firebase.firestore();
     db.collection("things").add({
       taskName: newTaskName,
-      taskOwner: email,
       taskDeadline: newTaskDeadline,
       createdAt: Date.now(),
-      userID: uid,
       quantity: newTaskQuantity,
     });
   };
-
-  var user = firebase.auth().currentUser;
-  var email, uid;
-
-  if (user != null) {
-    email = user.email;
-    uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
-    // this value to authenticate with your backend server, if
-    // you have one. Use User.getToken() instead.
-    updateUserInfo();
-  }
 
   function SignIn() {
     const signInWithGoogle = () => {
@@ -81,30 +65,43 @@ export default function App() {
     };
     return <button onClick={signInWithGoogle}>Sign in with Google</button>;
   }
-  function RetrieveUsers() {
-    firestore
-      .collection("users")
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data().email);
-        });
-      });
-  }
-  RetrieveUsers();
 
   function updateUserInfo() {
     const userData = {
       lastLoginTime: new Date(),
-      email: user.email,
+      userID: user.uid,
     };
     console.log("runs");
     return firebase
       .firestore()
-      .doc(`/users/${user.uid}`)
+      .doc(`/users/${user.email}`)
       .set(userData, { merge: true });
   }
+
+  const auth = firebase.auth();
+  const firestore = firebase.firestore();
+
+  var user = firebase.auth().currentUser;
+  var email, uid;
+  console.log(uid);
+  if (user != null) {
+    email = user.email;
+
+    console.log(user.uid);
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+    updateUserInfo();
+  }
+
+  async function getAll() {
+    const citiesRef = firestore.collection("users");
+    const snapshot = await citiesRef.get();
+    snapshot.forEach((doc) => {
+      console.log(doc.id);
+    });
+  }
+  getAll();
 
   return (
     <div className="App">

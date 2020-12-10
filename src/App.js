@@ -29,6 +29,10 @@ export default function App() {
   const [newTaskOwner, setNewTaskOwner] = React.useState();
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   // on load get todos from firebase
+
+  const auth = firebase.auth();
+  const firestore = firebase.firestore();
+
   useEffect(() => {
     const unsubscribe = firestore
       .collection("things")
@@ -40,7 +44,7 @@ export default function App() {
         setTasks(tasksData);
       });
     return unsubscribe;
-  }, []);
+  }, [firestore]);
 
   const onCreate = () => {
     const db = firebase.firestore();
@@ -52,9 +56,6 @@ export default function App() {
       taskOwner: newTaskOwner,
     });
   };
-
-  const auth = firebase.auth();
-  const firestore = firebase.firestore();
 
   var user = firebase.auth().currentUser;
   // var email, uid;

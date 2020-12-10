@@ -22,15 +22,11 @@ firebase.initializeApp({
 });
 
 export default function App() {
-  const [tasks, setTasks] = useState([
-    "task blabla",
-    "do laundry",
-    "wash horses",
-  ]);
+  const [tasks, setTasks] = useState([]);
   // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
   const [newTaskQuantity, setNewTaskQuantity] = React.useState();
-  // const [newTaskOwner, setNewTaskOwner] = React.useState();
+  const [newTaskOwner, setNewTaskOwner] = React.useState();
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   // on load get todos from firebase
   useEffect(() => {
@@ -53,9 +49,17 @@ export default function App() {
       taskDeadline: newTaskDeadline,
       createdAt: Date.now(),
       quantity: newTaskQuantity,
+      taskOwner: newTaskOwner,
     });
   };
 
+  const auth = firebase.auth();
+  const firestore = firebase.firestore();
+
+  var user = firebase.auth().currentUser;
+  // var email, uid;
+  console.log("hi");
+  getAll(firestore);
   function SignIn() {
     const signInWithGoogle = () => {
       const provider = new firebase.auth.GoogleAuthProvider();
@@ -71,38 +75,34 @@ export default function App() {
       lastLoginTime: new Date(),
       userID: user.uid,
     };
-    console.log("runs");
     return firebase
       .firestore()
       .doc(`/users/${user.email}`)
       .set(userData, { merge: true });
   }
 
-  const auth = firebase.auth();
-  const firestore = firebase.firestore();
-
-  var user = firebase.auth().currentUser;
-  var email, uid;
-  console.log(uid);
   if (user != null) {
-    email = user.email;
-
-    console.log(user.uid);
+    // email = user.email;
     // The user's ID, unique to the Firebase project. Do NOT use
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.
-    updateUserInfo();
   }
 
-  async function getAll() {
-    const citiesRef = firestore.collection("users");
-    const snapshot = await citiesRef.get();
+  async function getAll(firestore) {
+    const usersRef = firestore.collection("users");
+    const snapshot = await usersRef.get();
     snapshot.forEach((doc) => {
       console.log(doc.id);
     });
   }
-  getAll();
+  // used to calculate weeks in tasks filtering
+  const upperLimit = 1607385541000; // u can convert a Date into unix time
+  const lowerLimit = 1607302861000;
 
+  const todaysUpperLimit = 1607644799000; // u can convert a Date into unix time
+  const todaysLowerLimit = 1607562061000;
+
+  console.log(todaysLowerLimit);
   return (
     <div className="App">
       <header>
@@ -140,12 +140,14 @@ export default function App() {
                   <Form.Label style={{ fontWeight: "bold" }}>Owner</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue={email}
+                    value={newTaskOwner}
+                    onChange={(e) => setNewTaskOwner(e.target.value)}
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
                     id="email"
                   >
-                    <option>{email}</option>
-                    <option>...</option>
+                    <option>laurent@prologe.io</option>
+                    <option>alex@prologe.io</option>
+                    <option>ben@prologe.io</option>
                   </Form.Control>
                 </Col>
                 <Col xs="auto">
@@ -176,16 +178,48 @@ export default function App() {
               This Week
             </h4>
             <div id="tasks">
-              {tasks.map((task, taskOwner, taskDeadline) => (
-                <div key={task.id}>
-                  <Task
-                    className={`todo-item ${task.completed ? "completed" : ""}`}
-                    task={task}
-                    taskOwner={taskOwner}
-                    taskDeadline={taskDeadline}
-                  />
-                </div>
-              ))}
+              {tasks
+                .filter(
+                  (task) =>
+                    lowerLimit < task.createdAt && task.createdAt < upperLimit
+                )
+                .map((task, taskOwner, taskDeadline) => (
+                  <div key={task.id}>
+                    <Task
+                      className={`todo-item ${
+                        task.completed ? "completed" : ""
+                      }`}
+                      task={task}
+                      taskOwner={taskOwner}
+                      taskDeadline={taskDeadline}
+                    />
+                  </div>
+                ))}
+            </div>
+            <h4 style={{ color: "purple" }} className="mt-5">
+              {" "}
+              Today{" "}
+            </h4>
+            <div id="tasks">
+              {tasks
+                .filter(
+                  (task) =>
+                    task.createdAt > todaysLowerLimit &&
+                    task.createdAt < todaysUpperLimit
+                )
+                .map((task, taskOwner, taskDeadline, createdAt) => (
+                  <div key={task.id}>
+                    <Task
+                      className={`todo-item ${
+                        task.completed ? "completed" : ""
+                      }`}
+                      task={task}
+                      taskOwner={taskOwner}
+                      taskDeadline={taskDeadline}
+                      createdAt={createdAt}
+                    />
+                  </div>
+                ))}
             </div>
           </div>
         ) : (

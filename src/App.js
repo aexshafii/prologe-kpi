@@ -100,10 +100,21 @@ export default function App() {
   const upperLimit = 1607385541000; // u can convert a Date into unix time
   const lowerLimit = 1607302861000;
 
-  const todaysUpperLimit = 1607644799000; // u can convert a Date into unix time
   const todaysLowerLimit = 1607562061000;
 
   console.log(todaysLowerLimit);
+
+  function getThisWeeksMonday(d) {
+    d = new Date(d);
+
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff)).getMilliseconds();
+  }
+
+  getThisWeeksMonday(new Date());
+  console.log(getThisWeeksMonday(new Date()));
+
   return (
     <div className="App">
       <header>
@@ -176,7 +187,7 @@ export default function App() {
             </Form>
             <h4 style={{ color: "purple" }} className="mt-5">
               {" "}
-              This Week
+              Last Week
             </h4>
             <div id="tasks">
               {tasks
@@ -199,15 +210,11 @@ export default function App() {
             </div>
             <h4 style={{ color: "purple" }} className="mt-5">
               {" "}
-              Today{" "}
+              This Week
             </h4>
             <div id="tasks">
               {tasks
-                .filter(
-                  (task) =>
-                    task.createdAt > todaysLowerLimit &&
-                    task.createdAt < todaysUpperLimit
-                )
+                .filter((task) => task.createdAt > 1607904001000)
                 .map((task, taskOwner, taskDeadline, createdAt) => (
                   <div key={task.id}>
                     <Task

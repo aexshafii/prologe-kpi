@@ -8,6 +8,8 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^4.5.3",
+    "date-fns": "^2.16.1",
+    "datejs": "^1.0.0-rc3",
     "firebase": "^8.1.1",
     "firebase-admin": "^9.4.1",
     "react": "^17.0.1",

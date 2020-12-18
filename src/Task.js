@@ -1,12 +1,14 @@
 import React from "react";
 import firebase from "firebase/app";
 import { Col, Container, Row } from "react-bootstrap";
+import EasyEdit from "react-easy-edit";
 
 export const Task = ({ task }) => {
   const [taskName] = React.useState(task.taskName);
   const [taskOwner] = React.useState(task.taskOwner);
   const [taskDeadline] = React.useState(task.taskDeadline);
   const [taskQuantity] = React.useState(task.quantity);
+  const [taskProgress] = React.useState(task.progress);
 
   // ----> will be useful for modifying
   // // const [taskName, setTaskName] = React.useState(task.taskName);
@@ -24,6 +26,13 @@ export const Task = ({ task }) => {
   const onDelete = () => {
     const db = firebase.firestore();
     db.collection("things").doc(task.id).delete();
+  };
+
+  const save = (value) => {
+    alert(value);
+  };
+  const cancel = () => {
+    alert("Cancelled");
   };
 
   return (
@@ -53,6 +62,24 @@ export const Task = ({ task }) => {
             >
               {" "}
               {taskQuantity}{" "}
+            </Col>
+            <Col
+              style={{
+                backgroundColor: "#E8E8E8",
+                marginLeft: "5px",
+                fontSize: "20px",
+              }}
+            >
+              <EasyEdit
+                type="text"
+                onSave={save}
+                onCancel={cancel}
+                saveButtonLabel="Save Me"
+                cancelButtonLabel="Cancel Me"
+                attributes={{ name: "awesome-input", id: 1 }}
+                instructions="Enter estimated progress"
+                value={taskProgress}
+              ></EasyEdit>
             </Col>
             <Col
               style={{

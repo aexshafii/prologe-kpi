@@ -54,6 +54,7 @@ export default function App() {
       createdAt: Date.now(),
       quantity: newTaskQuantity,
       taskOwner: newTaskOwner,
+      progress: "0%",
     });
   };
 
@@ -121,6 +122,7 @@ export default function App() {
         <h1 className="mt-5">Prologe KPI ⚛️</h1>
         <h2 className="mt-5">Goals</h2>
       </header>
+
       <section>
         {user ? (
           <div>

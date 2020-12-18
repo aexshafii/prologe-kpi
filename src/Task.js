@@ -29,7 +29,8 @@ export const Task = ({ task }) => {
   };
 
   const save = (value) => {
-    alert(value);
+    const db = firebase.firestore();
+    db.collection("things").doc(task.id).update({ progress: value });
   };
   const cancel = () => {
     alert("Cancelled");

@@ -60,7 +60,6 @@ export default function App() {
 
   var user = firebase.auth().currentUser;
   // var email, uid;
-  console.log("hi");
   getAll(firestore);
   function SignIn() {
     const signInWithGoogle = () => {

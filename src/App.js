@@ -118,10 +118,25 @@ export default function App() {
   const weekDay = new Date().getDay();
   const daysToSunday = 7 - weekDay;
   const daysFromSunday = weekDay;
-
+  console.log(monthDay);
   const setDateToMidnight = (date) => {
     date.setHours(0, 0, 0, 0);
   };
+
+  let lastMonday = new Date();
+  lastMonday.setDate(monthDay - daysToSunday - 1);
+  setDateToMidnight(lastMonday);
+
+  console.log(lastMonday);
+
+  let lastSunday = new Date();
+  lastSunday.setDate(monthDay - daysFromSunday);
+  setDateToMidnight(lastSunday);
+
+  console.log(lastSunday);
+
+  lastMonday = lastMonday.getTime();
+  lastSunday = lastSunday.getTime();
 
   let maxDate = new Date();
   maxDate.setDate(monthDay + daysToSunday);
@@ -217,7 +232,7 @@ export default function App() {
               {tasks
                 .filter(
                   (task) =>
-                    lowerLimit < task.createdAt && task.createdAt < upperLimit
+                    lastMonday < task.createdAt && task.createdAt < lastSunday
                 )
                 .map((task, taskOwner, taskDeadline) => (
                   <div key={task.id}>

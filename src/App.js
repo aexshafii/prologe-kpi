@@ -123,20 +123,10 @@ export default function App() {
   console.log(thisSunday);
 
   // Calculate last week section for UI
-  let lastMonday = new Date();
-  lastMonday.setDate(thisMonday - 604800000);
-  setDateToMidnight(lastMonday);
+  let lastMonday = thisMonday - 604800000;
 
-  console.log(lastMonday);
   // 604,800,000 === one week in milliseconds
-  let lastSunday = new Date();
-  lastSunday.setDate(thisSunday - 604800000);
-  setDateToMidnight(lastSunday);
-
-  lastMonday = lastMonday.getTime();
-  lastSunday = lastSunday.getTime();
-
-  console.log(lastSunday);
+  let lastSunday = thisSunday - 604800000;
 
   return (
     <div className="App">

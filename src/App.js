@@ -88,6 +88,7 @@ export default function App() {
   function updateUserInfo() {
     const userData = {
       lastLoginTime: new Date(),
+      userID: user.uid,
     };
     return firebase
       .firestore()

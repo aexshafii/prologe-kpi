@@ -71,7 +71,6 @@ export const Task = ({ task }) => {
               }}
             >
               <EasyEdit
-                type="text"
                 onSave={save}
                 onCancel={cancel}
                 saveButtonLabel="Save Me"

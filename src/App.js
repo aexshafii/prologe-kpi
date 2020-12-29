@@ -7,6 +7,7 @@ import { Task } from "./Task";
 import { Col, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Alert from "react-bootstrap/Alert";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -28,6 +29,8 @@ export default function App() {
   const [newTaskQuantity, setNewTaskQuantity] = React.useState();
   const [newTaskOwner, setNewTaskOwner] = React.useState();
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
+  const [isLoggedIn, setIsLoggedIn] = React.useState();
+
   // on load get todos from firebase
 
   const auth = firebase.auth();
@@ -56,6 +59,15 @@ export default function App() {
       taskOwner: newTaskOwner,
       progress: "0",
     });
+
+    setIsLoggedIn(true);
+
+    const makeCheckDissapear = () =>
+      setTimeout(() => {
+        setIsLoggedIn(false);
+      }, 2000);
+    makeCheckDissapear();
+    console.log(isLoggedIn);
   };
 
   var user = firebase.auth().currentUser;
@@ -197,6 +209,9 @@ export default function App() {
                     Add
                   </Button>
                 </Col>
+                <Alert>
+                  <b> {isLoggedIn ? "Task added! ✅" : ""}</b>
+                </Alert>
               </Form.Row>
             </Form>
             <h4 style={{ color: "purple" }} className="mt-5">

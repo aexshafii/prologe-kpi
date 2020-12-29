@@ -219,15 +219,13 @@ export default function App() {
                   (task) =>
                     lastMonday < task.createdAt && task.createdAt < lastSunday
                 )
-                .map((task, taskOwner, taskDeadline) => (
+                .map((task) => (
                   <div key={task.id}>
                     <Task
                       className={`todo-item ${
                         task.completed ? "completed" : ""
                       }`}
                       task={task}
-                      taskOwner={taskOwner}
-                      taskDeadline={taskDeadline}
                     />
                   </div>
                 ))}
@@ -242,7 +240,7 @@ export default function App() {
                   (task) =>
                     thisMonday <= task.createdAt && task.createdAt <= thisSunday
                 )
-                .map((task, taskOwner, taskDeadline, createdAt) => (
+                .map((task) => (
                   <div key={task.id}>
                     <Task
                       className={`todo-item ${

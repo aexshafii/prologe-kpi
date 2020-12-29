@@ -27,7 +27,7 @@ export default function App() {
   // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
   const [newTaskQuantity, setNewTaskQuantity] = React.useState();
-  const [newTaskOwner, setNewTaskOwner] = React.useState();
+  const [newTaskOwner, setNewTaskOwner] = React.useState("laurent@prologe.io");
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   const [newTaskAdded, setNewTaskAdded] = React.useState();
 
@@ -170,7 +170,6 @@ export default function App() {
                   </Form.Label>
                   <Form.Control
                     value={newTaskQuantity}
-                    defaultValue="0"
                     onChange={(e) => setNewTaskQuantity(e.target.value)}
                     id="task"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}

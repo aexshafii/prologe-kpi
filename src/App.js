@@ -108,30 +108,35 @@ export default function App() {
     date.setHours(0, 0, 0, 0);
   };
 
+  // Calculate this week section for UI
+  let thisSunday = new Date();
+  thisSunday.setDate(monthDay + daysToSunday);
+  setDateToMidnight(thisSunday);
+
+  let thisMonday = new Date();
+  thisMonday.setDate(monthDay - daysFromSunday);
+  setDateToMidnight(thisMonday);
+
+  thisMonday = thisMonday.getTime();
+  thisSunday = thisSunday.getTime();
+
+  console.log(thisSunday);
+
+  // Calculate last week section for UI
   let lastMonday = new Date();
-  lastMonday.setDate(monthDay - daysToSunday - 1);
+  lastMonday.setDate(thisMonday - 604800000);
   setDateToMidnight(lastMonday);
 
   console.log(lastMonday);
-
+  // 604,800,000 === one week in milliseconds
   let lastSunday = new Date();
-  lastSunday.setDate(monthDay - daysFromSunday);
+  lastSunday.setDate(thisSunday - 604800000);
   setDateToMidnight(lastSunday);
-
-  console.log(lastSunday);
 
   lastMonday = lastMonday.getTime();
   lastSunday = lastSunday.getTime();
 
-  let maxDate = new Date();
-  maxDate.setDate(monthDay + daysToSunday);
-  setDateToMidnight(maxDate);
-
-  let minDate = new Date();
-  minDate.setDate(monthDay - daysFromSunday);
-  setDateToMidnight(minDate);
-  minDate = minDate.getTime();
-  maxDate = maxDate.getTime();
+  console.log(lastSunday);
 
   return (
     <div className="App">
@@ -235,7 +240,7 @@ export default function App() {
               {tasks
                 .filter(
                   (task) =>
-                    minDate <= task.createdAt && task.createdAt <= maxDate
+                    thisMonday <= task.createdAt && task.createdAt <= thisSunday
                 )
                 .map((task, taskOwner, taskDeadline, createdAt) => (
                   <div key={task.id}>
@@ -244,9 +249,6 @@ export default function App() {
                         task.completed ? "completed" : ""
                       }`}
                       task={task}
-                      taskOwner={taskOwner}
-                      taskDeadline={taskDeadline}
-                      createdAt={createdAt}
                     />
                   </div>
                 ))}

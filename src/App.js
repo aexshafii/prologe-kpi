@@ -29,7 +29,7 @@ export default function App() {
   const [newTaskQuantity, setNewTaskQuantity] = React.useState();
   const [newTaskOwner, setNewTaskOwner] = React.useState();
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
-  const [isLoggedIn, setIsLoggedIn] = React.useState();
+  const [newTaskAdded, setNewTaskAdded] = React.useState();
 
   // on load get todos from firebase
 
@@ -62,14 +62,14 @@ export default function App() {
       progress: "0",
     });
 
-    setIsLoggedIn(true);
+    setNewTaskAdded(true);
 
     const makeCheckDissapear = () =>
       setTimeout(() => {
-        setIsLoggedIn(false);
+        setNewTaskAdded(false);
       }, 2000);
     makeCheckDissapear();
-    console.log(isLoggedIn);
+    console.log(newTaskAdded);
   };
 
   var user = firebase.auth().currentUser;
@@ -170,6 +170,7 @@ export default function App() {
                   </Form.Label>
                   <Form.Control
                     value={newTaskQuantity}
+                    defaultValue="0"
                     onChange={(e) => setNewTaskQuantity(e.target.value)}
                     id="task"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
@@ -216,7 +217,7 @@ export default function App() {
                   </Button>
                 </Col>
                 <Alert>
-                  <b> {isLoggedIn ? "Task added! ✅" : ""}</b>
+                  <b> {newTaskAdded ? "Task added! ✅" : ""}</b>
                 </Alert>
               </Form.Row>
             </Form>

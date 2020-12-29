@@ -54,7 +54,7 @@ export default function App() {
       createdAt: Date.now(),
       quantity: newTaskQuantity,
       taskOwner: newTaskOwner,
-      progress: "0%",
+      progress: "0",
     });
   };
 

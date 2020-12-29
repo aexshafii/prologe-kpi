@@ -49,7 +49,9 @@ export default function App() {
     return unsubscribe;
   }, [firestore]);
 
-  const onCreate = () => {
+  const onCreate = (event) => {
+    event.preventDefault();
+
     const db = firebase.firestore();
     db.collection("things").add({
       taskName: newTaskName,
@@ -150,7 +152,7 @@ export default function App() {
       <section>
         {user ? (
           <div>
-            <Form>
+            <Form onSubmit={onCreate}>
               <Form.Row className="align-items-center">
                 <Col xs="auto">
                   <Form.Label style={{ fontWeight: "bold" }}>Goal</Form.Label>
@@ -203,8 +205,12 @@ export default function App() {
                 <Col xs="auto">
                   <Button
                     variant="primary"
-                    onClick={onCreate}
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      onCreate();
+                    }}
                     style={{ marginTop: "32px" }}
+                    type="submit"
                   >
                     Add
                   </Button>

@@ -79,7 +79,8 @@ export const Task = ({ task }) => {
                 cancelButtonLabel="Cancel Me"
                 attributes={{ name: "awesome-input", id: 1 }}
                 instructions="Enter estimated progress"
-                value={taskProgress}
+                value={taskProgress + "%"}
+                type="number"
               ></EasyEdit>
             </Col>
             <Col

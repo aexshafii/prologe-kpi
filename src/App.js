@@ -7,7 +7,6 @@ import { Task } from "./Task";
 import { Col, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import moment from "moment";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -96,24 +95,10 @@ export default function App() {
     snapshot.forEach((doc) => {});
   }
   // used to calculate weeks in tasks filtering
-  const upperLimit = 1607385541000; // u can convert a Date into unix time
-  const lowerLimit = 1607302861000;
 
-  const todaysLowerLimit = 1607562061000;
-
-  console.log(todaysLowerLimit);
-
-  function getThisWeeksMonday(d) {
-    d = new Date(d);
-
-    var day = d.getDay(),
-      diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
-    return new Date(d.setDate(diff)).getMilliseconds();
-  }
   let outOfWeek = new Date();
   outOfWeek.setDate(outOfWeek.getDate() + 7);
 
-  const dateList = [new Date(), outOfWeek];
   const monthDay = new Date().getDate();
   const weekDay = new Date().getDay();
   const daysToSunday = 7 - weekDay;
@@ -148,11 +133,6 @@ export default function App() {
   minDate = minDate.getTime();
   maxDate = maxDate.getTime();
 
-  let previousMonday = dateList[0];
-  let nextMonday = dateList[1];
-  previousMonday = previousMonday.getTime();
-  nextMonday = nextMonday.getTime();
-  console.log(previousMonday);
   return (
     <div className="App">
       <header>

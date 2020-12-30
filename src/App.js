@@ -39,10 +39,11 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = firestore
       .collection("things")
+      .orderBy("taskOwner")
       .onSnapshot((snapshot) => {
         const tasksData = [];
         snapshot.forEach((doc) =>
-          tasksData.push({ ...doc.data(), id: doc.id }).orderBy("taskOwner")
+          tasksData.push({ ...doc.data(), id: doc.id })
         );
         setTasks(tasksData);
       });
@@ -63,7 +64,6 @@ export default function App() {
     });
     // Check mark emoji animation
     setNewTaskAdded(true);
-
     const makeCheckDissapear = () =>
       setTimeout(() => {
         setNewTaskAdded(false);

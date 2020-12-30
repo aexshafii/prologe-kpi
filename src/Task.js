@@ -50,6 +50,7 @@ export const Task = ({ task }) => {
                 backgroundColor: "#E8E8E8",
                 fontSize: "20px",
               }}
+              xs={5}
             >
               {" "}
               {taskName}
@@ -60,6 +61,7 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
+              xs={1}
             >
               {taskQuantity === "0" ? "n/a" : taskQuantity}
             </Col>
@@ -69,6 +71,7 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
+              xs={1}
             >
               <EasyEdit
                 onSave={save}
@@ -87,6 +90,7 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
+              xs={3}
             >
               {" "}
               {taskOwner}
@@ -97,11 +101,19 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
+              lg="auto"
             >
               {taskDeadline}
             </Col>
-            <Col>
-              <button onClick={onDelete}>Delete</button>
+            <Col
+              style={{
+                backgroundColor: "#EFEFEF",
+                marginLeft: "0px",
+                fontSize: "20px",
+              }}
+              lg="auto"
+            >
+              <button onClick={onDelete}>x</button>
             </Col>
           </Row>
         </Container>

@@ -141,7 +141,6 @@ export default function App() {
 
   // 604,800,000 === one week in milliseconds
   let lastSunday = thisSunday - 604800000;
-
   return (
     <div className="App">
       <header>
@@ -174,6 +173,7 @@ export default function App() {
                     id="task"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
                     type="number"
+                    defaultValue="0"
                   />
                 </Col>
                 <Col xs="auto">

@@ -61,7 +61,7 @@ export const Task = ({ task }) => {
                 fontSize: "20px",
               }}
             >
-              {taskQuantity == 0 ? "n/a" : taskQuantity}
+              {taskQuantity === "0" ? "n/a" : taskQuantity}
             </Col>
             <Col
               style={{

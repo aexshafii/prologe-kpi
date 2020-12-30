@@ -191,7 +191,7 @@ export default function App() {
                 </Col>
                 <Col xs="auto">
                   <Form.Label style={{ fontWeight: "bold" }}>
-                    Select Date
+                    Due Date
                   </Form.Label>
                   <Form.Control
                     type="date"

@@ -42,7 +42,7 @@ export default function App() {
       .onSnapshot((snapshot) => {
         const tasksData = [];
         snapshot.forEach((doc) =>
-          tasksData.push({ ...doc.data(), id: doc.id })
+          tasksData.push({ ...doc.data(), id: doc.id }).orderBy("taskOwner")
         );
         setTasks(tasksData);
       });
@@ -61,7 +61,7 @@ export default function App() {
       taskOwner: newTaskOwner,
       progress: "0",
     });
-
+    // Check mark emoji animation
     setNewTaskAdded(true);
 
     const makeCheckDissapear = () =>
@@ -134,13 +134,12 @@ export default function App() {
   thisMonday = thisMonday.getTime();
   thisSunday = thisSunday.getTime();
 
-  console.log(thisSunday);
-
   // Calculate last week section for UI
-  let lastMonday = thisMonday - 604800000;
-
   // 604,800,000 === one week in milliseconds
+
+  let lastMonday = thisMonday - 604800000;
   let lastSunday = thisSunday - 604800000;
+
   return (
     <div className="App">
       <header>

@@ -40,6 +40,7 @@ export const Task = ({ task }) => {
     <>
       <div>
         <Container
+          fluid
           style={{
             marginLeft: "0px",
           }}
@@ -50,7 +51,7 @@ export const Task = ({ task }) => {
                 backgroundColor: "#E8E8E8",
                 fontSize: "20px",
               }}
-              xs={5}
+              md={2}
             >
               {" "}
               {taskName}
@@ -61,7 +62,7 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
-              xs={1}
+              md={2}
             >
               {taskQuantity === "0" ? "n/a" : taskQuantity}
             </Col>
@@ -71,7 +72,7 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
-              xs={1}
+              md={2}
             >
               <EasyEdit
                 onSave={save}
@@ -90,7 +91,7 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
-              xs={3}
+              md={2}
             >
               {" "}
               {taskOwner}
@@ -101,7 +102,7 @@ export const Task = ({ task }) => {
                 marginLeft: "5px",
                 fontSize: "20px",
               }}
-              lg="auto"
+              md={2}
             >
               {taskDeadline}
             </Col>
@@ -111,7 +112,7 @@ export const Task = ({ task }) => {
                 marginLeft: "0px",
                 fontSize: "20px",
               }}
-              lg="auto"
+              md={2}
             >
               <button onClick={onDelete}>x</button>
             </Col>

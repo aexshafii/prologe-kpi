@@ -8,6 +8,9 @@ import { Col, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from "react-bootstrap/Alert";
+import TableRow from "@material-ui/core/TableRow";
+
+import { BasicTable } from "./table.js";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -30,7 +33,6 @@ export default function App() {
   const [newTaskOwner, setNewTaskOwner] = React.useState("laurent@prologe.io");
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   const [newTaskAdded, setNewTaskAdded] = React.useState();
-
   // on load get todos from firebase
 
   const auth = firebase.auth();
@@ -140,13 +142,26 @@ export default function App() {
   let lastMonday = thisMonday - 604800000;
   let lastSunday = thisSunday - 604800000;
 
+  // material UI table
+
   return (
     <div className="App">
       <header>
         <h1 className="mt-5">Prologe KPI ⚛️</h1>
         <h2 className="mt-5">Goals</h2>
       </header>
-
+      <div id="tasks">
+        {tasks
+          .filter(
+            (task) => lastMonday < task.createdAt && task.createdAt < lastSunday
+          )
+          .map((task) => (
+            <div key={task.id}>
+              <TableRow task={task} />
+            </div>
+          ))}
+      </div>
+      <BasicTable />
       <section>
         {user ? (
           <div>

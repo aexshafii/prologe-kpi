@@ -91,7 +91,9 @@ export const ThisWeekTable = ({ tasks }) => {
                   {task.taskName}
                 </TableCell>
 
-                <TableCell scope="row" align="right"></TableCell>
+                <TableCell scope="row" align="right">
+                  {task.taskQuantity}
+                </TableCell>
                 <TableCell align="right"></TableCell>
                 <TableCell align="right"></TableCell>
                 <TableCell align="right"></TableCell>

@@ -35,7 +35,6 @@ export default function App() {
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   const [newTaskAdded, setNewTaskAdded] = React.useState();
   // on load get todos from firebase
-
   const auth = firebase.auth();
   const firestore = firebase.firestore();
 
@@ -144,6 +143,11 @@ export default function App() {
   let lastSunday = thisSunday - 604800000;
 
   // material UI table
+
+  // const onDelete = () => {
+  //   const db = firebase.firestore();
+  //   db.collection("things").doc(task.id).delete();
+  // };
 
   return (
     <div className="App">
@@ -284,12 +288,7 @@ export default function App() {
                 )
                 .map((task) => (
                   <div key={task.id}>
-                    <Task
-                      className={`todo-item ${
-                        task.completed ? "completed" : ""
-                      }`}
-                      task={task}
-                    />
+                    <Task task={task} />
                   </div>
                 ))}
             </div>

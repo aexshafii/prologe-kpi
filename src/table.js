@@ -6,6 +6,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import firebase from "firebase/app";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -39,20 +40,11 @@ thisSunday = thisSunday.getTime();
 let lastMonday = thisMonday - 604800000;
 let lastSunday = thisSunday - 604800000;
 
-export const BasicTable = ({ tasks, task }) => {
-  // const onDelete = () => {
-  //   tasks
-  //     .filter(
-  //       (task) => lastMonday < task.createdAt && task.createdAt < lastSunday
-  //     )
-  //     .map((task) => (
-  //       <div key={task.id}>
-  //         <TableRow task={task} />
-  //       </div>
-  //     ));
-  //   const db = firebase.firestore();
-  //   db.collection("things").doc(task.id).delete();
-  // };
+export const BasicTable = ({ tasks }) => {
+  const onDelete = (id) => {
+    const db = firebase.firestore();
+    db.collection("things").doc(id).delete();
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -86,7 +78,7 @@ export const BasicTable = ({ tasks, task }) => {
 
                 <TableCell align="right">
                   {" "}
-                  <button>x</button>
+                  <button onClick={() => onDelete(task.id)}>x</button>
                 </TableCell>
               </TableRow>
             ))}

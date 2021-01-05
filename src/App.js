@@ -11,6 +11,7 @@ import Alert from "react-bootstrap/Alert";
 import TableRow from "@material-ui/core/TableRow";
 
 import { BasicTable } from "./table.js";
+import { ThisWeekTable } from "./thisWeekTable.js";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -150,6 +151,9 @@ export default function App() {
         <h1 className="mt-5">Prologe KPI ⚛️</h1>
         <h2 className="mt-5">Goals</h2>
       </header>
+      <h4 style={{ color: "purple" }} className="mt-5">
+        Last Week
+      </h4>
       <div id="tasks">
         {tasks
           .filter(
@@ -160,8 +164,24 @@ export default function App() {
               <TableRow task={task} />
             </div>
           ))}
+        <BasicTable tasks={tasks} />
       </div>
-      <BasicTable />
+      <br></br>
+      <h4 style={{ color: "purple" }} className="mt-5">
+        This Week
+      </h4>
+      <div id="tasks">
+        {tasks
+          .filter(
+            (task) => lastMonday < task.createdAt && task.createdAt < lastSunday
+          )
+          .map((task) => (
+            <div key={task.id}>
+              <TableRow task={task} />
+            </div>
+          ))}
+        <ThisWeekTable tasks={tasks} />
+      </div>
       <section>
         {user ? (
           <div>
@@ -235,7 +255,6 @@ export default function App() {
               </Form.Row>
             </Form>
             <h4 style={{ color: "purple" }} className="mt-5">
-              {" "}
               Last Week
             </h4>
             <div id="tasks">

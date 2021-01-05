@@ -62,7 +62,7 @@ thisSunday = thisSunday.getTime();
 let lastMonday = thisMonday - 604800000;
 let lastSunday = thisSunday - 604800000;
 
-export const BasicTable = ({ tasks }) => {
+export const ThisWeekTable = ({ tasks }) => {
   console.log(tasks);
 
   const classes = useStyles();
@@ -83,7 +83,7 @@ export const BasicTable = ({ tasks }) => {
           {tasks
             .filter(
               (task) =>
-                lastMonday < task.createdAt && task.createdAt < lastSunday
+                thisMonday < task.createdAt && task.createdAt < thisSunday
             )
             .map((task) => (
               <TableRow key={task.taskName}>

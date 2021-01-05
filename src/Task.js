@@ -9,7 +9,7 @@ export const Task = ({ task }) => {
   const [taskDeadline] = React.useState(task.taskDeadline);
   const [taskQuantity] = React.useState(task.quantity);
   const [taskProgress] = React.useState(task.progress);
-
+  console.log(task);
   // ----> will be useful for modifying
   // // const [taskName, setTaskName] = React.useState(task.taskName);
   // // const [taskOwner, setTaskOwner] = React.useState(task.taskOwner);

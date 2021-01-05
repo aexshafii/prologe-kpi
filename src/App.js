@@ -155,17 +155,20 @@ export default function App() {
         Last Week
       </h4>
       <div id="tasks">
-        {tasks
-          .filter(
-            (task) => lastMonday < task.createdAt && task.createdAt < lastSunday
-          )
-          .map((task) => (
-            <div key={task.id}>
-              <TableRow task={task} />
-            </div>
-          ))}
-        <BasicTable tasks={tasks} />
+        <BasicTable tasks={tasks}>
+          {tasks
+            .filter(
+              (task) =>
+                lastMonday < task.createdAt && task.createdAt < lastSunday
+            )
+            .map((task) => (
+              <div key={task.id}>
+                <TableRow task={task} />
+              </div>
+            ))}
+        </BasicTable>
       </div>
+
       <br></br>
       <h4 style={{ color: "purple" }} className="mt-5">
         This Week
@@ -265,12 +268,7 @@ export default function App() {
                 )
                 .map((task) => (
                   <div key={task.id}>
-                    <Task
-                      className={`todo-item ${
-                        task.completed ? "completed" : ""
-                      }`}
-                      task={task}
-                    />
+                    <Task task={task} />
                   </div>
                 ))}
             </div>

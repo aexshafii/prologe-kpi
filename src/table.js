@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -7,8 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import firebase from "firebase/app";
-
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
+import InlineEdit from "./components/inlineEdit";
 
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
@@ -41,10 +43,21 @@ let lastMonday = thisMonday - 604800000;
 let lastSunday = thisSunday - 604800000;
 
 export const BasicTable = ({ tasks }) => {
+  const [taskProgress, setTaskProgress] = useState("hello");
+
   const onDelete = (id) => {
     const db = firebase.firestore();
     db.collection("things").doc(id).delete();
   };
+
+  // //Edit progress
+  // const save = (id) => {
+  //   const db = firebase.firestore();
+  //   db.collection("things").doc(id).update({ progress: 1 });
+  // };
+  // const cancel = () => {
+  //   alert("Cancelled");
+  // };
 
   return (
     <TableContainer component={Paper}>
@@ -56,7 +69,7 @@ export const BasicTable = ({ tasks }) => {
             <TableCell align="right">Progress&nbsp;(%)</TableCell>
             <TableCell align="right">Owner</TableCell>
             <TableCell align="right">Due Date</TableCell>
-            <TableCell align="right">Delete</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -72,12 +85,17 @@ export const BasicTable = ({ tasks }) => {
                 <TableCell scope="row" align="right">
                   {task.quantity}
                 </TableCell>
-                <TableCell align="right">{task.progress} </TableCell>
-                <TableCell align="right">{task.taskOwner}</TableCell>
+                <TableCell align="right">
+                  {" "}
+                  <InlineEdit
+                    text={taskProgress}
+                    onSetText={(text) => setTaskProgress(text)}
+                  />
+                </TableCell>
+                <TableCell align="right">{task.owner}</TableCell>
                 <TableCell align="right">{task.taskDeadline}</TableCell>
 
                 <TableCell align="right">
-                  {" "}
                   <button onClick={() => onDelete(task.id)}>x</button>
                 </TableCell>
               </TableRow>

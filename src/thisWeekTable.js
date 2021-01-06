@@ -7,7 +7,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import firebase from "firebase/app";
-import EasyEdit from "react-easy-edit";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -34,12 +33,6 @@ setDateToMidnight(thisMonday);
 
 thisMonday = thisMonday.getTime();
 thisSunday = thisSunday.getTime();
-
-// Calculate last week section for UI
-// 604,800,000 === one week in milliseconds
-
-let lastMonday = thisMonday - 604800000;
-let lastSunday = thisSunday - 604800000;
 
 export const ThisWeekTable = ({ tasks }) => {
   const onDelete = (id) => {

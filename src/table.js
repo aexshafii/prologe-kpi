@@ -50,6 +50,42 @@ export const BasicTable = ({ tasks }) => {
     db.collection("things").doc(id).delete();
   };
 
+  function Child({ task }) {
+    function handleClick(event) {
+      onChildClick(event.target.name);
+    }
+    return (
+      <TableBody>
+        {tasks
+          .filter(
+            (task) => lastMonday < task.createdAt && task.createdAt < lastSunday
+          )
+          .map((task) => (
+            <TableRow key={task.id} task={task}>
+              <TableCell scope="row">{task.taskName}</TableCell>
+
+              <TableCell scope="row" align="right">
+                {task.quantity === "0" ? "n/a" : task.quantity}
+              </TableCell>
+              <TableCell align="right">
+                {" "}
+                <InlineEdit
+                  text={taskProgress}
+                  onSetText={(text) => setTaskProgress(text)}
+                />
+              </TableCell>
+              <TableCell align="right">{task.taskOwner}</TableCell>
+              <TableCell align="right">{task.taskDeadline}</TableCell>
+
+              <TableCell align="right">
+                <button onClick={() => onDelete(task.id)}>x</button>
+              </TableCell>
+            </TableRow>
+          ))}
+      </TableBody>
+    );
+  }
+
   // //Edit progress
   // const save = (id) => {
   //   const db = firebase.firestore();
@@ -72,35 +108,7 @@ export const BasicTable = ({ tasks }) => {
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {tasks
-            .filter(
-              (task) =>
-                lastMonday < task.createdAt && task.createdAt < lastSunday
-            )
-            .map((task) => (
-              <TableRow key={task.id} task={task}>
-                <TableCell scope="row">{task.taskName}</TableCell>
-
-                <TableCell scope="row" align="right">
-                  {task.quantity === "0" ? "n/a" : task.quantity}
-                </TableCell>
-                <TableCell align="right">
-                  {" "}
-                  <InlineEdit
-                    text={taskProgress}
-                    onSetText={(text) => setTaskProgress(text)}
-                  />
-                </TableCell>
-                <TableCell align="right">{task.owner}</TableCell>
-                <TableCell align="right">{task.taskDeadline}</TableCell>
-
-                <TableCell align="right">
-                  <button onClick={() => onDelete(task.id)}>x</button>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
+        <Child></Child>
       </Table>
     </TableContainer>
   );

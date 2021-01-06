@@ -83,7 +83,7 @@ export const BasicTable = ({ tasks }) => {
                 <TableCell scope="row">{task.taskName}</TableCell>
 
                 <TableCell scope="row" align="right">
-                  {task.quantity}
+                  {task.quantity === "0" ? "n/a" : task.quantity}
                 </TableCell>
                 <TableCell align="right">
                   {" "}

@@ -44,16 +44,16 @@ let lastSunday = thisSunday - 604800000;
 
 export const BasicTable = ({ tasks }) => {
   const [taskProgress, setTaskProgress] = useState("hello");
-
+  // const [task, setTask] = useState("");
   const onDelete = (id) => {
     const db = firebase.firestore();
     db.collection("things").doc(id).delete();
   };
 
-  function Child({ task }) {
-    function handleClick(event) {
-      onChildClick(event.target.name);
-    }
+  function Child({ task, onChildClick }) {
+    // function handleClick(event) {
+    //   onChildClick(event.target.name);
+    // }
     return (
       <TableBody>
         {tasks

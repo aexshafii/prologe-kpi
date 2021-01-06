@@ -11,6 +11,7 @@ import Alert from "react-bootstrap/Alert";
 import TableRow from "@material-ui/core/TableRow";
 
 import { BasicTable } from "./table.js";
+import { ThisWeekTable } from "./thisWeekTable.js";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -34,7 +35,6 @@ export default function App() {
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   const [newTaskAdded, setNewTaskAdded] = React.useState();
   // on load get todos from firebase
-
   const auth = firebase.auth();
   const firestore = firebase.firestore();
 
@@ -144,12 +144,39 @@ export default function App() {
 
   // material UI table
 
+  // const onDelete = () => {
+  //   const db = firebase.firestore();
+  //   db.collection("things").doc(task.id).delete();
+  // };
+
   return (
     <div className="App">
       <header>
         <h1 className="mt-5">Prologe KPI ⚛️</h1>
         <h2 className="mt-5">Goals</h2>
       </header>
+      <h4 style={{ color: "purple" }} className="mt-5">
+        Last Week
+      </h4>
+      <div id="tasks">
+        <BasicTable tasks={tasks}>
+          {tasks
+            .filter(
+              (task) =>
+                lastMonday < task.createdAt && task.createdAt < lastSunday
+            )
+            .map((task) => (
+              <div key={task.id}>
+                <TableRow task={task} />
+              </div>
+            ))}
+        </BasicTable>
+      </div>
+
+      <br></br>
+      <h4 style={{ color: "purple" }} className="mt-5">
+        This Week
+      </h4>
       <div id="tasks">
         {tasks
           .filter(
@@ -160,8 +187,8 @@ export default function App() {
               <TableRow task={task} />
             </div>
           ))}
+        <ThisWeekTable tasks={tasks} />
       </div>
-      <BasicTable />
       <section>
         {user ? (
           <div>
@@ -235,7 +262,6 @@ export default function App() {
               </Form.Row>
             </Form>
             <h4 style={{ color: "purple" }} className="mt-5">
-              {" "}
               Last Week
             </h4>
             <div id="tasks">
@@ -246,12 +272,7 @@ export default function App() {
                 )
                 .map((task) => (
                   <div key={task.id}>
-                    <Task
-                      className={`todo-item ${
-                        task.completed ? "completed" : ""
-                      }`}
-                      task={task}
-                    />
+                    <Task task={task} />
                   </div>
                 ))}
             </div>
@@ -267,12 +288,7 @@ export default function App() {
                 )
                 .map((task) => (
                   <div key={task.id}>
-                    <Task
-                      className={`todo-item ${
-                        task.completed ? "completed" : ""
-                      }`}
-                      task={task}
-                    />
+                    <Task task={task} />
                   </div>
                 ))}
             </div>

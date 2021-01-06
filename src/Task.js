@@ -9,7 +9,7 @@ export const Task = ({ task }) => {
   const [taskDeadline] = React.useState(task.taskDeadline);
   const [taskQuantity] = React.useState(task.quantity);
   const [taskProgress] = React.useState(task.progress);
-
+  console.log(task);
   // ----> will be useful for modifying
   // // const [taskName, setTaskName] = React.useState(task.taskName);
   // // const [taskOwner, setTaskOwner] = React.useState(task.taskOwner);
@@ -27,7 +27,7 @@ export const Task = ({ task }) => {
     const db = firebase.firestore();
     db.collection("things").doc(task.id).delete();
   };
-
+  //Edit progress
   const save = (value) => {
     const db = firebase.firestore();
     db.collection("things").doc(task.id).update({ progress: value });
@@ -108,7 +108,6 @@ export const Task = ({ task }) => {
             </Col>
             <Col
               style={{
-                backgroundColor: "#EFEFEF",
                 marginLeft: "0px",
                 fontSize: "20px",
               }}

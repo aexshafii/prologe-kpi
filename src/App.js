@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from "react-bootstrap/Alert";
 import TableRow from "@material-ui/core/TableRow";
 
-import { BasicTable } from "./table.js";
+import { BasicTable } from "./lastWeekTable.js";
 import { ThisWeekTable } from "./thisWeekTable.js";
 
 firebase.initializeApp({
@@ -155,40 +155,6 @@ export default function App() {
         <h1 className="mt-5">Prologe KPI ⚛️</h1>
         <h2 className="mt-5">Goals</h2>
       </header>
-      <h4 style={{ color: "purple" }} className="mt-5">
-        Last Week
-      </h4>
-      <div id="tasks">
-        <BasicTable tasks={tasks}>
-          {tasks
-            .filter(
-              (task) =>
-                lastMonday < task.createdAt && task.createdAt < lastSunday
-            )
-            .map((task) => (
-              <div key={task.id}>
-                <TableRow task={task} />
-              </div>
-            ))}
-        </BasicTable>
-      </div>
-
-      <br></br>
-      <h4 style={{ color: "purple" }} className="mt-5">
-        This Week
-      </h4>
-      <div id="tasks">
-        {tasks
-          .filter(
-            (task) => lastMonday < task.createdAt && task.createdAt < lastSunday
-          )
-          .map((task) => (
-            <div key={task.id}>
-              <TableRow task={task} />
-            </div>
-          ))}
-        <ThisWeekTable tasks={tasks} />
-      </div>
       <section>
         {user ? (
           <div>
@@ -265,6 +231,25 @@ export default function App() {
               Last Week
             </h4>
             <div id="tasks">
+              <BasicTable tasks={tasks}>
+                {tasks
+                  .filter(
+                    (task) =>
+                      lastMonday < task.createdAt && task.createdAt < lastSunday
+                  )
+                  .map((task) => (
+                    <div key={task.id}>
+                      <TableRow task={task} />
+                    </div>
+                  ))}
+              </BasicTable>
+            </div>
+
+            <br></br>
+            <h4 style={{ color: "purple" }} className="mt-5">
+              This Week
+            </h4>
+            <div id="tasks">
               {tasks
                 .filter(
                   (task) =>
@@ -272,25 +257,10 @@ export default function App() {
                 )
                 .map((task) => (
                   <div key={task.id}>
-                    <Task task={task} />
+                    <TableRow task={task} />
                   </div>
                 ))}
-            </div>
-            <h4 style={{ color: "purple" }} className="mt-5">
-              {" "}
-              This Week
-            </h4>
-            <div id="tasks">
-              {tasks
-                .filter(
-                  (task) =>
-                    thisMonday <= task.createdAt && task.createdAt <= thisSunday
-                )
-                .map((task) => (
-                  <div key={task.id}>
-                    <Task task={task} />
-                  </div>
-                ))}
+              <ThisWeekTable tasks={tasks} />
             </div>
           </div>
         ) : (

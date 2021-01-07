@@ -43,49 +43,70 @@ let lastMonday = thisMonday - 604800000;
 let lastSunday = thisSunday - 604800000;
 
 export const BasicTable = ({ tasks }) => {
-  const [taskProgress, setTaskProgress] = useState("hello");
+  const [task, setTask] = useState("");
+  console.log(task);
+  function handleChange(newValue) {
+    setTask(newValue);
+  }
+
   // const [task, setTask] = useState("");
   const onDelete = (id) => {
     const db = firebase.firestore();
     db.collection("things").doc(id).delete();
   };
 
-  function Child({ task, onChildClick }) {
-    // function handleClick(event) {
-    //   onChildClick(event.target.name);
-    // }
+  function Child2({ task }) {
+    const [storedText] = useState("Here's some more, edit away!");
+    console.log(storedText);
+
+    const onModify = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ progress: text });
+    };
+
+    const onModifyName = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskName: text });
+    };
+
+    const onModifyQuantity = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ quantity: text });
+    };
     return (
-      <TableBody>
-        {tasks
-          .filter(
-            (task) => lastMonday < task.createdAt && task.createdAt < lastSunday
-          )
-          .map((task) => (
-            <TableRow key={task.id} task={task}>
-              <TableCell scope="row">{task.taskName}</TableCell>
+      <TableRow key={task.id} task={task}>
+        <TableCell scope="row">
+          <InlineEdit
+            text={task.taskName}
+            onSetText={(text) => onModifyName(task.id, text)}
+          />
+        </TableCell>
 
-              <TableCell scope="row" align="right">
-                {task.quantity === "0" ? "n/a" : task.quantity}
-              </TableCell>
-              <TableCell align="right">
-                {" "}
-                <InlineEdit
-                  text={taskProgress}
-                  onSetText={(text) => setTaskProgress(text)}
-                />
-              </TableCell>
-              <TableCell align="right">{task.taskOwner}</TableCell>
-              <TableCell align="right">{task.taskDeadline}</TableCell>
+        <TableCell scope="row" align="right">
+          <InlineEdit
+            text={task.quantity === "0" ? "n/a" : task.quantity}
+            onSetText={(text) => onModifyQuantity(task.id, text)}
+          />
+        </TableCell>
+        <TableCell align="right">
+          {" "}
+          <InlineEdit
+            text={task.progress}
+            onSetText={(text) => onModify(task.id, text)}
+          />
+        </TableCell>
+        <TableCell align="right">{task.taskOwner}</TableCell>
+        <TableCell align="right">{task.taskDeadline}</TableCell>
 
-              <TableCell align="right">
-                <button onClick={() => onDelete(task.id)}>x</button>
-              </TableCell>
-            </TableRow>
-          ))}
-      </TableBody>
+        <TableCell align="right">
+          <button onClick={() => onDelete(task.id)}>x</button>
+        </TableCell>
+      </TableRow>
     );
   }
-
   // //Edit progress
   // const save = (id) => {
   //   const db = firebase.firestore();
@@ -108,7 +129,16 @@ export const BasicTable = ({ tasks }) => {
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
-        <Child></Child>
+        <TableBody>
+          {tasks
+            .filter(
+              (task) =>
+                lastMonday < task.createdAt && task.createdAt < lastSunday
+            )
+            .map((task) => (
+              <Child2 task={task} onChange={handleChange}></Child2>
+            ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -7,8 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import firebase from "firebase/app";
-
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
+import InlineEdit from "./components/inlineEdit";
 
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
@@ -34,11 +36,82 @@ setDateToMidnight(thisMonday);
 thisMonday = thisMonday.getTime();
 thisSunday = thisSunday.getTime();
 
+// Calculate last week section for UI
+// 604,800,000 === one week in milliseconds
+
 export const ThisWeekTable = ({ tasks }) => {
+  const [task, setTask] = useState("");
+  console.log(task);
+  function handleChange(newValue) {
+    setTask(newValue);
+  }
+
+  // const [task, setTask] = useState("");
   const onDelete = (id) => {
     const db = firebase.firestore();
     db.collection("things").doc(id).delete();
   };
+
+  function Child2({ task }) {
+    const [storedText] = useState("Here's some more, edit away!");
+    console.log(storedText);
+
+    const onModify = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ progress: text });
+    };
+
+    const onModifyName = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskName: text });
+    };
+
+    const onModifyQuantity = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ quantity: text });
+    };
+    return (
+      <TableRow key={task.id} task={task}>
+        <TableCell scope="row">
+          <InlineEdit
+            text={task.taskName}
+            onSetText={(text) => onModifyName(task.id, text)}
+          />
+        </TableCell>
+
+        <TableCell scope="row" align="right">
+          <InlineEdit
+            text={task.quantity === "0" ? "n/a" : task.quantity}
+            onSetText={(text) => onModifyQuantity(task.id, text)}
+          />
+        </TableCell>
+        <TableCell align="right">
+          {" "}
+          <InlineEdit
+            text={task.progress}
+            onSetText={(text) => onModify(task.id, text)}
+          />
+        </TableCell>
+        <TableCell align="right">{task.taskOwner}</TableCell>
+        <TableCell align="right">{task.taskDeadline}</TableCell>
+
+        <TableCell align="right">
+          <button onClick={() => onDelete(task.id)}>x</button>
+        </TableCell>
+      </TableRow>
+    );
+  }
+  // //Edit progress
+  // const save = (id) => {
+  //   const db = firebase.firestore();
+  //   db.collection("things").doc(id).update({ progress: 1 });
+  // };
+  // const cancel = () => {
+  //   alert("Cancelled");
+  // };
 
   return (
     <TableContainer component={Paper}>
@@ -60,20 +133,7 @@ export const ThisWeekTable = ({ tasks }) => {
                 thisMonday < task.createdAt && task.createdAt < thisSunday
             )
             .map((task) => (
-              <TableRow key={task.id} task={task}>
-                <TableCell scope="row">{task.taskName}</TableCell>
-
-                <TableCell scope="row" align="right">
-                  {task.quantity}
-                </TableCell>
-                <TableCell align="right">{task.progress} </TableCell>
-                <TableCell align="right">{task.taskOwner}</TableCell>
-                <TableCell align="right">{task.taskDeadline}</TableCell>
-
-                <TableCell align="right">
-                  <button onClick={() => onDelete(task.id)}>x</button>
-                </TableCell>
-              </TableRow>
+              <Child2 task={task} onChange={handleChange}></Child2>
             ))}
         </TableBody>
       </Table>

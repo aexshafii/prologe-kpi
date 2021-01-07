@@ -44,7 +44,6 @@ let lastSunday = thisSunday - 604800000;
 
 export const BasicTable = ({ tasks }) => {
   const [task, setTask] = useState("");
-  const [taskProgress, setTaskProgress] = React.useState("");
   console.log(task);
   function handleChange(newValue) {
     setTask(newValue);
@@ -57,9 +56,7 @@ export const BasicTable = ({ tasks }) => {
   };
 
   function Child2({ task }) {
-    const [storedText, setStoredText] = useState(
-      "Here's some more, edit away!"
-    );
+    const [storedText] = useState("Here's some more, edit away!");
     console.log(storedText);
 
     const onModify = (id, text) => {
@@ -67,12 +64,32 @@ export const BasicTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ progress: text });
     };
+
+    const onModifyName = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskName: text });
+    };
+
+    const onModifyQuantity = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ quantity: text });
+    };
     return (
       <TableRow key={task.id} task={task}>
-        <TableCell scope="row">{task.taskName}</TableCell>
+        <TableCell scope="row">
+          <InlineEdit
+            text={task.taskName}
+            onSetText={(text) => onModifyName(task.id, text)}
+          />
+        </TableCell>
 
         <TableCell scope="row" align="right">
-          {task.quantity === "0" ? "n/a" : task.quantity}
+          <InlineEdit
+            text={task.quantity === "0" ? "n/a" : task.quantity}
+            onSetText={(text) => onModifyQuantity(task.id, text)}
+          />
         </TableCell>
         <TableCell align="right">
           {" "}

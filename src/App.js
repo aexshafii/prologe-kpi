@@ -3,7 +3,6 @@ import "./App.css";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { Task } from "./Task";
 import { Col, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";

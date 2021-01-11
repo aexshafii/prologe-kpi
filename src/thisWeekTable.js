@@ -84,7 +84,7 @@ export const ThisWeekTable = ({ tasks }) => {
 
         <TableCell scope="row" align="right">
           <InlineEdit
-            text={task.quantity === "0" ? "n/a" : task.quantity}
+            text={task.quantity ? task.quantity : "n/a"}
             onSetText={(text) => onModifyQuantity(task.id, text)}
           />
         </TableCell>

@@ -92,12 +92,19 @@ export const BasicTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="right">
-          {" "}
           <InlineEdit
             text={task.progress}
             onSetText={(text) => onModify(task.id, text)}
           />
         </TableCell>
+
+        <TableCell align="right">
+          <InlineEdit
+            text={task.progress}
+            onSetText={(text) => onModify(task.id, text)}
+          />
+        </TableCell>
+
         <TableCell align="right">{task.taskOwner}</TableCell>
         <TableCell align="right">{task.taskDeadline}</TableCell>
 

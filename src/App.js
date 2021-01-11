@@ -31,6 +31,8 @@ export default function App() {
   const [newTaskName, setNewTaskName] = React.useState();
   const [newTaskQuantity, setNewTaskQuantity] = React.useState();
   const [newTaskOwner, setNewTaskOwner] = React.useState("laurent@prologe.io");
+  const [newTaskPriority, setNewTaskPriority] = React.useState("medium");
+
   const [newTaskDeadline, setNewTaskDeadline] = React.useState();
   const [newTaskAdded, setNewTaskAdded] = React.useState();
   // on load get todos from firebase
@@ -62,6 +64,7 @@ export default function App() {
       quantity: newTaskQuantity,
       taskOwner: newTaskOwner,
       progress: "0",
+      priority: newTaskPriority,
     });
     // Check mark emoji animation
     setNewTaskAdded(true);
@@ -178,8 +181,8 @@ export default function App() {
                     onChange={(e) => setNewTaskQuantity(e.target.value)}
                     id="task"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
-                    type="number"
-                    defaultValue="0"
+                    type="text"
+                    pattern="[0-1000]"
                   />
                 </Col>
                 <Col xs="auto">
@@ -194,6 +197,22 @@ export default function App() {
                     <option>laurent@prologe.io</option>
                     <option>alex@prologe.io</option>
                     <option>ben@prologe.io</option>
+                  </Form.Control>
+                </Col>
+                <Col xs="auto">
+                  <Form.Label style={{ fontWeight: "bold" }}>
+                    Priority
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={newTaskPriority}
+                    onChange={(e) => setNewTaskPriority(e.target.value)}
+                    style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
+                    id="email"
+                  >
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
                   </Form.Control>
                 </Col>
                 <Col xs="auto">

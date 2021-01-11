@@ -52,7 +52,7 @@ export const ThisWeekTable = ({ tasks }) => {
     db.collection("things").doc(id).delete();
   };
 
-  function Child2({ task }) {
+  function TaskRow({ task }) {
     const [storedText] = useState("Here's some more, edit away!");
     console.log(storedText);
 
@@ -89,15 +89,20 @@ export const ThisWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="right">
-          {" "}
           <InlineEdit
             text={task.progress}
             onSetText={(text) => onModify(task.id, text)}
           />
         </TableCell>
+        <TableCell align="right">
+          <InlineEdit
+            text={task.priority}
+            onSetText={(text) => onModify(task.id, text)}
+          />
+        </TableCell>
         <TableCell align="right">{task.taskOwner}</TableCell>
-        <TableCell align="right">{task.taskDeadline}</TableCell>
 
+        <TableCell align="right">{task.taskDeadline}</TableCell>
         <TableCell align="right">
           <button onClick={() => onDelete(task.id)}>x</button>
         </TableCell>
@@ -121,9 +126,11 @@ export const ThisWeekTable = ({ tasks }) => {
             <TableCell align="left">Goal</TableCell>
             <TableCell align="right">Quantity</TableCell>
             <TableCell align="right">Progress&nbsp;(%)</TableCell>
+            <TableCell align="right">Priority</TableCell>
+
             <TableCell align="right">Owner</TableCell>
             <TableCell align="right">Due Date</TableCell>
-            <TableCell align="right"></TableCell>
+            <TableCell align="right">ki</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -133,7 +140,7 @@ export const ThisWeekTable = ({ tasks }) => {
                 thisMonday < task.createdAt && task.createdAt < thisSunday
             )
             .map((task) => (
-              <Child2 task={task} onChange={handleChange}></Child2>
+              <TaskRow task={task} onChange={handleChange}></TaskRow>
             ))}
         </TableBody>
       </Table>

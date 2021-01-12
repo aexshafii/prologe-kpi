@@ -29,11 +29,47 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   // const [input, setInput] = useState("");
   const [newTaskName, setNewTaskName] = React.useState();
-  const [newTaskQuantity, setNewTaskQuantity] = React.useState();
+  const [newTaskQuantity, setNewTaskQuantity] = React.useState("0");
   const [newTaskOwner, setNewTaskOwner] = React.useState("laurent@prologe.io");
-  const [newTaskPriority, setNewTaskPriority] = React.useState("medium");
+  const [newTaskPriority, setNewTaskPriority] = React.useState("High");
 
-  const [newTaskDeadline, setNewTaskDeadline] = React.useState();
+  // used to calculate weeks in tasks filtering
+
+  let outOfWeek = new Date();
+  outOfWeek.setDate(outOfWeek.getDate() + 7);
+
+  const monthDay = new Date().getDate();
+  const weekDay = new Date().getDay();
+  const daysToSunday = 7 - weekDay;
+  const daysFromSunday = weekDay;
+  console.log(monthDay);
+  const setDateToMidnight = (date) => {
+    date.setHours(0, 0, 0, 0);
+  };
+
+  // Calculate this week section for UI
+  let thisSunday = new Date();
+  thisSunday.setDate(monthDay + daysToSunday);
+  setDateToMidnight(thisSunday);
+
+  let thisMonday = new Date();
+  thisMonday.setDate(monthDay - daysFromSunday);
+  setDateToMidnight(thisMonday);
+
+  let defaultInputDate = JSON.stringify(thisSunday);
+
+  defaultInputDate = defaultInputDate.slice(1, 11);
+  console.log(defaultInputDate);
+
+  // Calculate last week section for UI
+  // 604,800,000 === one week in milliseconds
+
+  let lastMonday = thisMonday - 604800000;
+  let lastSunday = thisSunday - 604800000;
+
+  const [newTaskDeadline, setNewTaskDeadline] = React.useState(
+    defaultInputDate
+  );
   const [newTaskAdded, setNewTaskAdded] = React.useState();
   // on load get todos from firebase
   const auth = firebase.auth();
@@ -112,37 +148,6 @@ export default function App() {
     const snapshot = await usersRef.get();
     snapshot.forEach((doc) => {});
   }
-  // used to calculate weeks in tasks filtering
-
-  let outOfWeek = new Date();
-  outOfWeek.setDate(outOfWeek.getDate() + 7);
-
-  const monthDay = new Date().getDate();
-  const weekDay = new Date().getDay();
-  const daysToSunday = 7 - weekDay;
-  const daysFromSunday = weekDay;
-  console.log(monthDay);
-  const setDateToMidnight = (date) => {
-    date.setHours(0, 0, 0, 0);
-  };
-
-  // Calculate this week section for UI
-  let thisSunday = new Date();
-  thisSunday.setDate(monthDay + daysToSunday);
-  setDateToMidnight(thisSunday);
-
-  let thisMonday = new Date();
-  thisMonday.setDate(monthDay - daysFromSunday);
-  setDateToMidnight(thisMonday);
-
-  thisMonday = thisMonday.getTime();
-  thisSunday = thisSunday.getTime();
-
-  // Calculate last week section for UI
-  // 604,800,000 === one week in milliseconds
-
-  let lastMonday = thisMonday - 604800000;
-  let lastSunday = thisSunday - 604800000;
 
   // material UI table
 
@@ -150,7 +155,6 @@ export default function App() {
   //   const db = firebase.firestore();
   //   db.collection("things").doc(task.id).delete();
   // };
-
   return (
     <div className="App">
       <header>
@@ -170,6 +174,7 @@ export default function App() {
                     id="task"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
                     type="text"
+                    required="required"
                   />
                 </Col>
                 <Col xs="auto">
@@ -193,6 +198,7 @@ export default function App() {
                     onChange={(e) => setNewTaskOwner(e.target.value)}
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
                     id="email"
+                    type="text"
                   >
                     <option>laurent@prologe.io</option>
                     <option>alex@prologe.io</option>
@@ -225,6 +231,7 @@ export default function App() {
                     onChange={(e) => setNewTaskDeadline(e.target.value)}
                     id="deadline"
                     style={{ backgroundColor: "#C0C0C0", color: "#696969" }}
+                    defaultValue={defaultInputDate}
                   />
                 </Col>
                 <Col xs="auto">

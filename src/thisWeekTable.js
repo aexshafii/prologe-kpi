@@ -33,6 +33,8 @@ let thisMonday = new Date();
 thisMonday.setDate(monthDay - daysFromSunday);
 setDateToMidnight(thisMonday);
 
+console.log(thisMonday);
+
 thisMonday = thisMonday.getTime();
 thisSunday = thisSunday.getTime();
 
@@ -84,7 +86,7 @@ export const ThisWeekTable = ({ tasks }) => {
 
         <TableCell scope="row" align="right">
           <InlineEdit
-            text={task.quantity ? task.quantity : "n/a"}
+            text={task.quantity === 0 ? task.quantity : "n/a"}
             onSetText={(text) => onModifyQuantity(task.id, text)}
           />
         </TableCell>

@@ -98,12 +98,7 @@ export const BasicTable = ({ tasks }) => {
           />
         </TableCell>
 
-        <TableCell align="right">
-          <InlineEdit
-            text={task.progress}
-            onSetText={(text) => onModify(task.id, text)}
-          />
-        </TableCell>
+        <TableCell align="right">{task.priority}</TableCell>
 
         <TableCell align="right">{task.taskOwner}</TableCell>
         <TableCell align="right">{task.taskDeadline}</TableCell>
@@ -114,14 +109,6 @@ export const BasicTable = ({ tasks }) => {
       </TableRow>
     );
   }
-  // //Edit progress
-  // const save = (id) => {
-  //   const db = firebase.firestore();
-  //   db.collection("things").doc(id).update({ progress: 1 });
-  // };
-  // const cancel = () => {
-  //   alert("Cancelled");
-  // };
 
   return (
     <TableContainer component={Paper}>
@@ -131,6 +118,8 @@ export const BasicTable = ({ tasks }) => {
             <TableCell align="left">Goal</TableCell>
             <TableCell align="right">Quantity</TableCell>
             <TableCell align="right">Progress&nbsp;(%)</TableCell>
+            <TableCell align="right">Priority</TableCell>
+
             <TableCell align="right">Owner</TableCell>
             <TableCell align="right">Due Date</TableCell>
             <TableCell align="right"></TableCell>

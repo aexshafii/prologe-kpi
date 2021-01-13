@@ -96,12 +96,7 @@ export const ThisWeekTable = ({ tasks }) => {
             onSetText={(text) => onModify(task.id, text)}
           />
         </TableCell>
-        <TableCell align="right">
-          <InlineEdit
-            text={task.priority}
-            onSetText={(text) => onModify(task.id, text)}
-          />
-        </TableCell>
+        <TableCell align="right">{task.priority}</TableCell>
         <TableCell align="right">{task.taskOwner}</TableCell>
 
         <TableCell align="right">{task.taskDeadline}</TableCell>
@@ -111,14 +106,6 @@ export const ThisWeekTable = ({ tasks }) => {
       </TableRow>
     );
   }
-  // //Edit progress
-  // const save = (id) => {
-  //   const db = firebase.firestore();
-  //   db.collection("things").doc(id).update({ progress: 1 });
-  // };
-  // const cancel = () => {
-  //   alert("Cancelled");
-  // };
 
   return (
     <TableContainer component={Paper}>
@@ -132,7 +119,7 @@ export const ThisWeekTable = ({ tasks }) => {
 
             <TableCell align="right">Owner</TableCell>
             <TableCell align="right">Due Date</TableCell>
-            <TableCell align="right">ki</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

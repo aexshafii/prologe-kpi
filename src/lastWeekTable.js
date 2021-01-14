@@ -11,6 +11,7 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
+import SelectEdit from "./components/selectEdit";
 
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
@@ -59,7 +60,7 @@ export const BasicTable = ({ tasks }) => {
     const [storedText] = useState("Here's some more, edit away!");
     console.log(storedText);
 
-    const onModify = (id, text) => {
+    const onModifyProgress = (id, text) => {
       console.log(text);
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ progress: text });
@@ -76,6 +77,13 @@ export const BasicTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ quantity: text });
     };
+
+    const onModifyPriority = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ priority: text });
+    };
+
     return (
       <TableRow key={task.id} task={task}>
         <TableCell scope="row">
@@ -94,11 +102,16 @@ export const BasicTable = ({ tasks }) => {
         <TableCell align="right">
           <InlineEdit
             text={task.progress}
-            onSetText={(text) => onModify(task.id, text)}
+            onSetText={(text) => onModifyProgress(task.id, text)}
           />
         </TableCell>
 
-        <TableCell align="right">{task.priority}</TableCell>
+        <TableCell align="right">
+          <SelectEdit
+            text={task.priority}
+            onSetText={(text) => onModifyPriority(task.id, text)}
+          ></SelectEdit>
+        </TableCell>
 
         <TableCell align="right">{task.taskOwner}</TableCell>
         <TableCell align="right">{task.taskDeadline}</TableCell>

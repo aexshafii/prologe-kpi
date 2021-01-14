@@ -75,6 +75,8 @@ export const ThisWeekTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ quantity: text });
     };
+    const priorityOptions = ["ben", "alex", "laurent"];
+
     return (
       <TableRow key={task.id} task={task}>
         <TableCell scope="row">
@@ -94,6 +96,7 @@ export const ThisWeekTable = ({ tasks }) => {
           <InlineEdit
             text={task.progress}
             onSetText={(text) => onModify(task.id, text)}
+            priorityOptions={priorityOptions}
           />
         </TableCell>
         <TableCell align="right">{task.priority}</TableCell>

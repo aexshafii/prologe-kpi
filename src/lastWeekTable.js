@@ -13,6 +13,13 @@ import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
 import SelectEdit from "./components/selectEdit";
 
+import useDropdown from "./components/useDropdown";
+import { ta } from "date-fns/locale";
+
+const shoe_list = ["Prada", "Jimmy Choos", "Nike", "Adidas"];
+const hat_list = ["Knicks", "Jets", "Rockets", "Cowboys"];
+
+const owners_list = ["ben", "alex", "laurent"];
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
 
@@ -84,6 +91,9 @@ export const BasicTable = ({ tasks }) => {
       db.collection("things").doc(id).update({ priority: text });
     };
 
+    let taskPriority = task.priority;
+    const [shoe, ShoeDropdown] = useDropdown(taskPriority, shoe_list);
+
     return (
       <TableRow key={task.id} task={task}>
         <TableCell scope="row">
@@ -107,10 +117,14 @@ export const BasicTable = ({ tasks }) => {
         </TableCell>
 
         <TableCell align="right">
-          <SelectEdit
+          <ShoeDropdown
             text={task.priority}
             onSetText={(text) => onModifyPriority(task.id, text)}
-          ></SelectEdit>
+          ></ShoeDropdown>
+          <useDropdown
+            text={task.priority}
+            onSetText={(text) => onModifyPriority(task.id, text)}
+          ></useDropdown>
         </TableCell>
 
         <TableCell align="right">{task.taskOwner}</TableCell>

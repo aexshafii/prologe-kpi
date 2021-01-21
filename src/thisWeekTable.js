@@ -11,6 +11,7 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
+import useDropdown from "./components/useDropdown";
 
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
@@ -33,13 +34,14 @@ let thisMonday = new Date();
 thisMonday.setDate(monthDay - daysFromSunday);
 setDateToMidnight(thisMonday);
 
-console.log(thisMonday);
-
 thisMonday = thisMonday.getTime();
 thisSunday = thisSunday.getTime();
 
 // Calculate last week section for UI
 // 604,800,000 === one week in milliseconds
+
+let lastMonday = thisMonday - 604800000;
+let lastSunday = thisSunday - 604800000;
 
 export const ThisWeekTable = ({ tasks }) => {
   const [task, setTask] = useState("");
@@ -54,11 +56,11 @@ export const ThisWeekTable = ({ tasks }) => {
     db.collection("things").doc(id).delete();
   };
 
-  function TaskRow({ task }) {
+  function Child2({ task }) {
     const [storedText] = useState("Here's some more, edit away!");
     console.log(storedText);
 
-    const onModify = (id, text) => {
+    const onModifyProgress = (id, text) => {
       console.log(text);
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ progress: text });
@@ -75,7 +77,42 @@ export const ThisWeekTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ quantity: text });
     };
-    const priorityOptions = ["ben", "alex", "laurent"];
+
+    const onModifyPriority = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ priority: text });
+    };
+    const onModifyOwner = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskOwner: text });
+    };
+    const onModifyDate = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskDeadline: text });
+    };
+    // Dropdown for priority
+    const priority_list = ["High", "Low", "Medium"];
+    let taskPriority = task.priority;
+    let onSetText = (text) => onModifyPriority(task.id, text);
+    const [priority, PriorityDropdown] = useDropdown(
+      taskPriority,
+      priority_list,
+      onSetText
+    );
+    console.log(priority);
+    // Dropdown for owner
+    const owners_list = ["Ben", "Alex", "Laurent"];
+    let taskOwner = task.taskOwner;
+    let onSetText2 = (text) => onModifyOwner(task.id, text);
+    const [owner, OwnerDropdown] = useDropdown(
+      taskOwner,
+      owners_list,
+      onSetText2
+    );
+    console.log(owner);
 
     return (
       <TableRow key={task.id} task={task}>
@@ -88,21 +125,31 @@ export const ThisWeekTable = ({ tasks }) => {
 
         <TableCell scope="row" align="right">
           <InlineEdit
-            text={task.quantity === 0 ? task.quantity : "n/a"}
+            text={task.quantity === "0" ? "n/a" : task.quantity}
             onSetText={(text) => onModifyQuantity(task.id, text)}
           />
         </TableCell>
         <TableCell align="right">
           <InlineEdit
             text={task.progress}
-            onSetText={(text) => onModify(task.id, text)}
-            priorityOptions={priorityOptions}
+            onSetText={(text) => onModifyProgress(task.id, text)}
           />
         </TableCell>
-        <TableCell align="right">{task.priority}</TableCell>
-        <TableCell align="right">{task.taskOwner}</TableCell>
 
-        <TableCell align="right">{task.taskDeadline}</TableCell>
+        <TableCell align="right">
+          <PriorityDropdown></PriorityDropdown>
+        </TableCell>
+
+        <TableCell align="right">
+          <OwnerDropdown></OwnerDropdown>
+        </TableCell>
+        <TableCell align="right">
+          <InlineEdit
+            text={task.taskDeadline}
+            onSetText={(text) => onModifyDate(task.id, text)}
+          />
+        </TableCell>
+
         <TableCell align="right">
           <button onClick={() => onDelete(task.id)}>x</button>
         </TableCell>
@@ -132,7 +179,7 @@ export const ThisWeekTable = ({ tasks }) => {
                 thisMonday < task.createdAt && task.createdAt < thisSunday
             )
             .map((task) => (
-              <TaskRow task={task} onChange={handleChange}></TaskRow>
+              <Child2 task={task} onChange={handleChange}></Child2>
             ))}
         </TableBody>
       </Table>

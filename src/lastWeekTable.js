@@ -11,10 +11,7 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
-import SelectEdit from "./components/selectEdit";
-
 import useDropdown from "./components/useDropdown";
-import { ta } from "date-fns/locale";
 
 const priority_list = ["High", "Low", "Medium"];
 const owners_list = ["Ben", "Alex", "Laurent"];
@@ -93,6 +90,11 @@ export const BasicTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ taskOwner: text });
     };
+    const onModifyDate = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskDeadline: text });
+    };
     // Dropdown for priority
     let taskPriority = task.priority;
     let onSetText = (text) => onModifyPriority(task.id, text);
@@ -140,7 +142,12 @@ export const BasicTable = ({ tasks }) => {
         <TableCell align="right">
           <OwnerDropdown></OwnerDropdown>
         </TableCell>
-        <TableCell align="right">{task.taskDeadline}</TableCell>
+        <TableCell align="right">
+          <InlineEdit
+            text={task.taskDeadline}
+            onSetText={(text) => onModifyDate(task.id, text)}
+          />
+        </TableCell>
 
         <TableCell align="right">
           <button onClick={() => onDelete(task.id)}>x</button>

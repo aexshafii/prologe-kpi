@@ -13,8 +13,6 @@ import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
 import useDropdown from "./components/useDropdown";
 
-const priority_list = ["High", "Low", "Medium"];
-const owners_list = ["Ben", "Alex", "Laurent"];
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
 
@@ -96,23 +94,26 @@ export const BasicTable = ({ tasks }) => {
       db.collection("things").doc(id).update({ taskDeadline: text });
     };
     // Dropdown for priority
+    const priority_list = ["High", "Low", "Medium"];
     let taskPriority = task.priority;
     let onSetText = (text) => onModifyPriority(task.id, text);
-    console.log(onSetText);
-    const [shoe, PriorityDropdown] = useDropdown(
+    const [priority, PriorityDropdown] = useDropdown(
       taskPriority,
       priority_list,
       onSetText
     );
+    console.log(priority);
     // Dropdown for owner
+    const owners_list = ["Ben", "Alex", "Laurent"];
     let taskOwner = task.taskOwner;
     let onSetText2 = (text) => onModifyOwner(task.id, text);
-    console.log(onSetText);
     const [owner, OwnerDropdown] = useDropdown(
       taskOwner,
       owners_list,
       onSetText2
     );
+    console.log(owner);
+
     return (
       <TableRow key={task.id} task={task}>
         <TableCell scope="row">

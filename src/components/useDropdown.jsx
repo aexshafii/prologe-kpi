@@ -3,17 +3,18 @@ import useKeypress from "../hooks/useKeypress";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
 
-function SelectEdit(props) {
+const useDropdown = (defaultState, options, fct) => {
+  console.log(defaultState);
+  const [state, setState] = useState(defaultState);
   const [isInputActive, setIsInputActive] = useState(false);
-  const [inputValue, setInputValue] = useState(props.text);
+  const [inputValue, setInputValue] = useState(defaultState);
   const wrapperRef = useRef(null);
   const textRef = useRef(null);
   const inputRef = useRef(null);
 
   const enter = useKeypress("Enter");
   const esc = useKeypress("Escape");
-
-  const { onSetText } = props;
+  const onSetText = fct;
   console.log(onSetText);
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
@@ -32,10 +33,10 @@ function SelectEdit(props) {
 
   const onEsc = useCallback(() => {
     if (esc) {
-      setInputValue(props.text);
+      setInputValue(options);
       setIsInputActive(false);
     }
-  }, [esc, props.text]);
+  }, [esc, options]);
 
   // focus the cursor in the input field on edit start
   useEffect(() => {
@@ -65,7 +66,7 @@ function SelectEdit(props) {
     setIsInputActive,
   ]);
 
-  return (
+  const Dropdownmaker = () => (
     <span className="inline-text" ref={wrapperRef}>
       <span
         ref={textRef}
@@ -74,7 +75,7 @@ function SelectEdit(props) {
           !isInputActive ? "active" : "hidden"
         }`}
       >
-        {props.text}
+        {state}
       </span>
       <select
         ref={inputRef}
@@ -87,12 +88,30 @@ function SelectEdit(props) {
           isInputActive ? "active" : "hidden"
         }`}
       >
-        <option>High</option>
-        <option>Medium</option>
-        <option>Low</option>
+        <option>All</option>
+        {options.map((item) => (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        ))}
       </select>
     </span>
-  );
-}
 
-export default SelectEdit;
+    // <select
+    //   value={state}
+    //   onChange={(e) => setState(e.target.value)}
+    //   onBlur={(e) => setState(e.target.value)}
+    //   disabled={!props.length}
+    // >
+    //   <option>All</option>
+    //   {props.map((item) => (
+    //     <option key={item} value={item}>
+    //       {item}
+    //     </option>
+    //   ))}
+    // </select>
+  );
+  return [state, Dropdownmaker, setState];
+};
+
+export default useDropdown;

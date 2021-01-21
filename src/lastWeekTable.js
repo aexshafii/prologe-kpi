@@ -11,7 +11,7 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
-import SelectEdit from "./components/selectEdit";
+import useDropdown from "./components/useDropdown";
 
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
@@ -83,6 +83,36 @@ export const BasicTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ priority: text });
     };
+    const onModifyOwner = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskOwner: text });
+    };
+    const onModifyDate = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskDeadline: text });
+    };
+    // Dropdown for priority
+    const priority_list = ["High", "Low", "Medium"];
+    let taskPriority = task.priority;
+    let onSetText = (text) => onModifyPriority(task.id, text);
+    const [priority, PriorityDropdown] = useDropdown(
+      taskPriority,
+      priority_list,
+      onSetText
+    );
+    console.log(priority);
+    // Dropdown for owner
+    const owners_list = ["Ben", "Alex", "Laurent"];
+    let taskOwner = task.taskOwner;
+    let onSetText2 = (text) => onModifyOwner(task.id, text);
+    const [owner, OwnerDropdown] = useDropdown(
+      taskOwner,
+      owners_list,
+      onSetText2
+    );
+    console.log(owner);
 
     return (
       <TableRow key={task.id} task={task}>
@@ -107,14 +137,18 @@ export const BasicTable = ({ tasks }) => {
         </TableCell>
 
         <TableCell align="right">
-          <SelectEdit
-            text={task.priority}
-            onSetText={(text) => onModifyPriority(task.id, text)}
-          ></SelectEdit>
+          <PriorityDropdown></PriorityDropdown>
         </TableCell>
 
-        <TableCell align="right">{task.taskOwner}</TableCell>
-        <TableCell align="right">{task.taskDeadline}</TableCell>
+        <TableCell align="right">
+          <OwnerDropdown></OwnerDropdown>
+        </TableCell>
+        <TableCell align="right">
+          <InlineEdit
+            text={task.taskDeadline}
+            onSetText={(text) => onModifyDate(task.id, text)}
+          />
+        </TableCell>
 
         <TableCell align="right">
           <button onClick={() => onDelete(task.id)}>x</button>

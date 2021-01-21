@@ -14,7 +14,7 @@ function SelectEdit(props) {
   const esc = useKeypress("Escape");
 
   const { onSetText } = props;
-
+  console.log(onSetText);
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
     if (isInputActive) {

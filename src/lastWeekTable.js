@@ -16,10 +16,8 @@ import SelectEdit from "./components/selectEdit";
 import useDropdown from "./components/useDropdown";
 import { ta } from "date-fns/locale";
 
-const shoe_list = ["Prada", "Jimmy Choos", "Nike", "Adidas"];
-const hat_list = ["Knicks", "Jets", "Rockets", "Cowboys"];
-
-const owners_list = ["ben", "alex", "laurent"];
+const priority_list = ["High", "Low", "Medium"];
+const owners_list = ["Ben", "Alex", "Laurent"];
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
 
@@ -90,10 +88,29 @@ export const BasicTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ priority: text });
     };
-
+    const onModifyOwner = (id, text) => {
+      console.log(text);
+      const db = firebase.firestore();
+      db.collection("things").doc(id).update({ taskOwner: text });
+    };
+    // Dropdown for priority
     let taskPriority = task.priority;
-    const [shoe, ShoeDropdown] = useDropdown(taskPriority, shoe_list);
-
+    let onSetText = (text) => onModifyPriority(task.id, text);
+    console.log(onSetText);
+    const [shoe, PriorityDropdown] = useDropdown(
+      taskPriority,
+      priority_list,
+      onSetText
+    );
+    // Dropdown for owner
+    let taskOwner = task.taskOwner;
+    let onSetText2 = (text) => onModifyOwner(task.id, text);
+    console.log(onSetText);
+    const [owner, OwnerDropdown] = useDropdown(
+      taskOwner,
+      owners_list,
+      onSetText2
+    );
     return (
       <TableRow key={task.id} task={task}>
         <TableCell scope="row">
@@ -117,17 +134,12 @@ export const BasicTable = ({ tasks }) => {
         </TableCell>
 
         <TableCell align="right">
-          <ShoeDropdown
-            text={task.priority}
-            onSetText={(text) => onModifyPriority(task.id, text)}
-          ></ShoeDropdown>
-          <useDropdown
-            text={task.priority}
-            onSetText={(text) => onModifyPriority(task.id, text)}
-          ></useDropdown>
+          <PriorityDropdown></PriorityDropdown>
         </TableCell>
 
-        <TableCell align="right">{task.taskOwner}</TableCell>
+        <TableCell align="right">
+          <OwnerDropdown></OwnerDropdown>
+        </TableCell>
         <TableCell align="right">{task.taskDeadline}</TableCell>
 
         <TableCell align="right">

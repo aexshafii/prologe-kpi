@@ -3,7 +3,7 @@ import useKeypress from "../hooks/useKeypress";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
 
-const useDropdown = (defaultState, props) => {
+const useDropdown = (defaultState, options, fct) => {
   console.log(defaultState);
   const [state, setState] = useState(defaultState);
   const [isInputActive, setIsInputActive] = useState(false);
@@ -14,9 +14,8 @@ const useDropdown = (defaultState, props) => {
 
   const enter = useKeypress("Enter");
   const esc = useKeypress("Escape");
-
-  const { onSetText } = props;
-
+  const onSetText = fct;
+  console.log(onSetText);
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
     if (isInputActive) {
@@ -34,10 +33,10 @@ const useDropdown = (defaultState, props) => {
 
   const onEsc = useCallback(() => {
     if (esc) {
-      setInputValue(props);
+      setInputValue(options);
       setIsInputActive(false);
     }
-  }, [esc, props]);
+  }, [esc, options]);
 
   // focus the cursor in the input field on edit start
   useEffect(() => {
@@ -90,7 +89,7 @@ const useDropdown = (defaultState, props) => {
         }`}
       >
         <option>All</option>
-        {props.map((item) => (
+        {options.map((item) => (
           <option key={item} value={item}>
             {item}
           </option>

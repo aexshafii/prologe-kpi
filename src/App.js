@@ -7,9 +7,8 @@ import { Col, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from "react-bootstrap/Alert";
-import TableRow from "@material-ui/core/TableRow";
 
-import { BasicTable } from "./lastWeekTable.js";
+import { LastWeekTable } from "./lastWeekTable.js";
 import { ThisWeekTable } from "./thisWeekTable.js";
 
 firebase.initializeApp({
@@ -41,8 +40,6 @@ export default function App() {
   const monthDay = new Date().getDate();
   const weekDay = new Date().getDay();
   const daysToSunday = 7 - weekDay;
-  const daysFromSunday = weekDay;
-  console.log(monthDay);
   const setDateToMidnight = (date) => {
     date.setHours(0, 0, 0, 0);
   };
@@ -52,20 +49,9 @@ export default function App() {
   thisSunday.setDate(monthDay + daysToSunday);
   setDateToMidnight(thisSunday);
 
-  let thisMonday = new Date();
-  thisMonday.setDate(monthDay - daysFromSunday);
-  setDateToMidnight(thisMonday);
-
   let defaultInputDate = JSON.stringify(thisSunday);
 
   defaultInputDate = defaultInputDate.slice(1, 11);
-  console.log(defaultInputDate);
-
-  // Calculate last week section for UI
-  // 604,800,000 === one week in milliseconds
-
-  let lastMonday = thisMonday - 604800000;
-  let lastSunday = thisSunday - 604800000;
 
   const [newTaskDeadline, setNewTaskDeadline] = React.useState(
     defaultInputDate
@@ -256,18 +242,7 @@ export default function App() {
               Last Week
             </h4>
             <div id="tasks">
-              <BasicTable tasks={tasks}>
-                {tasks
-                  .filter(
-                    (task) =>
-                      lastMonday < task.createdAt && task.createdAt < lastSunday
-                  )
-                  .map((task) => (
-                    <div key={task.id}>
-                      <TableRow task={task} />
-                    </div>
-                  ))}
-              </BasicTable>
+              <LastWeekTable tasks={tasks} />
             </div>
 
             <br></br>
@@ -275,16 +250,6 @@ export default function App() {
               This Week
             </h4>
             <div id="tasks">
-              {tasks
-                .filter(
-                  (task) =>
-                    lastMonday < task.createdAt && task.createdAt < lastSunday
-                )
-                .map((task) => (
-                  <div key={task.id}>
-                    <TableRow task={task} />
-                  </div>
-                ))}
               <ThisWeekTable tasks={tasks} />
             </div>
           </div>

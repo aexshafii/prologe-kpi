@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -43,23 +43,13 @@ thisSunday = thisSunday.getTime();
 let lastMonday = thisMonday - 604800000;
 let lastSunday = thisSunday - 604800000;
 
-export const BasicTable = ({ tasks }) => {
-  const [task, setTask] = useState("");
-  console.log(task);
-  function handleChange(newValue) {
-    setTask(newValue);
-  }
-
-  // const [task, setTask] = useState("");
+export const LastWeekTable = ({ tasks }) => {
   const onDelete = (id) => {
     const db = firebase.firestore();
     db.collection("things").doc(id).delete();
   };
 
-  function Child2({ task }) {
-    const [storedText] = useState("Here's some more, edit away!");
-    console.log(storedText);
-
+  function TableRows({ task }) {
     const onModifyProgress = (id, text) => {
       console.log(text);
       const db = firebase.firestore();
@@ -94,7 +84,7 @@ export const BasicTable = ({ tasks }) => {
       db.collection("things").doc(id).update({ taskDeadline: text });
     };
     // Dropdown for priority
-    const priority_list = ["High", "Low", "Medium"];
+    const priority_list = ["Low", "Medium", "High"];
     let taskPriority = task.priority;
     let onSetText = (text) => onModifyPriority(task.id, text);
     const [priority, PriorityDropdown] = useDropdown(
@@ -104,7 +94,11 @@ export const BasicTable = ({ tasks }) => {
     );
     console.log(priority);
     // Dropdown for owner
-    const owners_list = ["Ben", "Alex", "Laurent"];
+    const owners_list = [
+      "ben@prologe.io",
+      "alex@prologe.io",
+      "laurent@prologe.io",
+    ];
     let taskOwner = task.taskOwner;
     let onSetText2 = (text) => onModifyOwner(task.id, text);
     const [owner, OwnerDropdown] = useDropdown(
@@ -165,8 +159,8 @@ export const BasicTable = ({ tasks }) => {
             <TableCell align="left">Goal</TableCell>
             <TableCell align="right">Quantity</TableCell>
             <TableCell align="right">Progress&nbsp;(%)</TableCell>
-            <TableCell align="right">Priority</TableCell>
 
+            <TableCell align="right">Priority</TableCell>
             <TableCell align="right">Owner</TableCell>
             <TableCell align="right">Due Date</TableCell>
             <TableCell align="right"></TableCell>
@@ -179,7 +173,7 @@ export const BasicTable = ({ tasks }) => {
                 lastMonday < task.createdAt && task.createdAt < lastSunday
             )
             .map((task) => (
-              <Child2 task={task} onChange={handleChange}></Child2>
+              <TableRows task={task}></TableRows>
             ))}
         </TableBody>
       </Table>

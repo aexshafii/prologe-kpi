@@ -88,7 +88,6 @@ const useDropdown = (defaultState, options, fct) => {
           isInputActive ? "active" : "hidden"
         }`}
       >
-        <option>All</option>
         {options.map((item) => (
           <option key={item} value={item}>
             {item}

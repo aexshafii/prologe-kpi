@@ -94,7 +94,7 @@ export const ThisWeekTable = ({ tasks }) => {
       db.collection("things").doc(id).update({ taskDeadline: text });
     };
     // Dropdown for priority
-    const priority_list = ["High", "Low", "Medium"];
+    const priority_list = ["Low", "Medium", "High"];
     let taskPriority = task.priority;
     let onSetText = (text) => onModifyPriority(task.id, text);
     const [priority, PriorityDropdown] = useDropdown(
@@ -104,7 +104,11 @@ export const ThisWeekTable = ({ tasks }) => {
     );
     console.log(priority);
     // Dropdown for owner
-    const owners_list = ["Ben", "Alex", "Laurent"];
+    const owners_list = [
+      "ben@prologe.io",
+      "alex@prologe.io",
+      "laurent@prologe.io",
+    ];
     let taskOwner = task.taskOwner;
     let onSetText2 = (text) => onModifyOwner(task.id, text);
     const [owner, OwnerDropdown] = useDropdown(

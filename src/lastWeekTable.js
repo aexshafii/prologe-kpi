@@ -43,13 +43,13 @@ thisSunday = thisSunday.getTime();
 let lastMonday = thisMonday - 604800000;
 let lastSunday = thisSunday - 604800000;
 
-export const BasicTable = ({ tasks }) => {
+export const LastWeekTable = ({ tasks }) => {
   const onDelete = (id) => {
     const db = firebase.firestore();
     db.collection("things").doc(id).delete();
   };
 
-  function Child2({ task }) {
+  function TableRows({ task }) {
     const onModifyProgress = (id, text) => {
       console.log(text);
       const db = firebase.firestore();
@@ -173,7 +173,7 @@ export const BasicTable = ({ tasks }) => {
                 lastMonday < task.createdAt && task.createdAt < lastSunday
             )
             .map((task) => (
-              <Child2 task={task}></Child2>
+              <TableRows task={task}></TableRows>
             ))}
         </TableBody>
       </Table>

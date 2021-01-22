@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -37,29 +37,13 @@ setDateToMidnight(thisMonday);
 thisMonday = thisMonday.getTime();
 thisSunday = thisSunday.getTime();
 
-// Calculate last week section for UI
-// 604,800,000 === one week in milliseconds
-
-let lastMonday = thisMonday - 604800000;
-let lastSunday = thisSunday - 604800000;
-
 export const ThisWeekTable = ({ tasks }) => {
-  const [task, setTask] = useState("");
-  console.log(task);
-  function handleChange(newValue) {
-    setTask(newValue);
-  }
-
-  // const [task, setTask] = useState("");
   const onDelete = (id) => {
     const db = firebase.firestore();
     db.collection("things").doc(id).delete();
   };
 
-  function Child2({ task }) {
-    const [storedText] = useState("Here's some more, edit away!");
-    console.log(storedText);
-
+  function TableRows({ task }) {
     const onModifyProgress = (id, text) => {
       console.log(text);
       const db = firebase.firestore();
@@ -183,7 +167,7 @@ export const ThisWeekTable = ({ tasks }) => {
                 thisMonday < task.createdAt && task.createdAt < thisSunday
             )
             .map((task) => (
-              <Child2 task={task} onChange={handleChange}></Child2>
+              <TableRows task={task}></TableRows>
             ))}
         </TableBody>
       </Table>

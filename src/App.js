@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from "react-bootstrap/Alert";
 import TableRow from "@material-ui/core/TableRow";
 
-import { BasicTable } from "./lastWeekTable.js";
+import { LastWeekTable } from "./lastWeekTable.js";
 import { ThisWeekTable } from "./thisWeekTable.js";
 
 firebase.initializeApp({
@@ -256,18 +256,7 @@ export default function App() {
               Last Week
             </h4>
             <div id="tasks">
-              <BasicTable tasks={tasks}>
-                {tasks
-                  .filter(
-                    (task) =>
-                      lastMonday < task.createdAt && task.createdAt < lastSunday
-                  )
-                  .map((task) => (
-                    <div key={task.id}>
-                      <TableRow task={task} />
-                    </div>
-                  ))}
-              </BasicTable>
+              <LastWeekTable tasks={tasks}></LastWeekTable>
             </div>
 
             <br></br>
@@ -275,16 +264,6 @@ export default function App() {
               This Week
             </h4>
             <div id="tasks">
-              {tasks
-                .filter(
-                  (task) =>
-                    lastMonday < task.createdAt && task.createdAt < lastSunday
-                )
-                .map((task) => (
-                  <div key={task.id}>
-                    <TableRow task={task} />
-                  </div>
-                ))}
               <ThisWeekTable tasks={tasks} />
             </div>
           </div>

@@ -11,7 +11,7 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
-import useDropdown from "./components/useDropdown";
+import useDropdown from "./components/dropdownEdit";
 
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);

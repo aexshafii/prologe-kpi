@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
 import useDropdown from "./components/dropdownEdit";
-
+import LinearProgressWithLabel from "./components/demo";
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
 
@@ -124,10 +124,7 @@ export const LastWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="right">
-          <InlineEdit
-            text={task.progress}
-            onSetText={(text) => onModifyProgress(task.id, text)}
-          />
+          <LinearProgressWithLabel />
         </TableCell>
 
         <TableCell align="right">
@@ -144,9 +141,7 @@ export const LastWeekTable = ({ tasks }) => {
           />
         </TableCell>
 
-        <TableCell align="right">
-          <button onClick={() => onDelete(task.id)}>x</button>
-        </TableCell>
+        <TableCell align="right"></TableCell>
       </TableRow>
     );
   }

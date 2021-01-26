@@ -86,7 +86,6 @@ export const ThisWeekTable = ({ tasks }) => {
       priority_list,
       onSetText
     );
-    console.log(priority);
     // Dropdown for owner
     const owners_list = [
       "ben@prologe.io",
@@ -100,7 +99,6 @@ export const ThisWeekTable = ({ tasks }) => {
       owners_list,
       onSetText2
     );
-    console.log(owner);
 
     return (
       <TableRow key={task.id} task={task}>
@@ -154,7 +152,6 @@ export const ThisWeekTable = ({ tasks }) => {
             <TableCell align="right">Quantity</TableCell>
             <TableCell align="right">Progress&nbsp;(%)</TableCell>
             <TableCell align="right">Priority</TableCell>
-
             <TableCell align="right">Owner</TableCell>
             <TableCell align="right">Due Date</TableCell>
             <TableCell align="right"></TableCell>

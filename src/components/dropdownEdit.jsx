@@ -95,20 +95,6 @@ const useDropdown = (defaultState, options, fct) => {
         ))}
       </select>
     </span>
-
-    // <select
-    //   value={state}
-    //   onChange={(e) => setState(e.target.value)}
-    //   onBlur={(e) => setState(e.target.value)}
-    //   disabled={!props.length}
-    // >
-    //   <option>All</option>
-    //   {props.map((item) => (
-    //     <option key={item} value={item}>
-    //       {item}
-    //     </option>
-    //   ))}
-    // </select>
   );
   return [state, Dropdownmaker, setState];
 };

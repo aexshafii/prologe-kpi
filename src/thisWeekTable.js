@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
 import useDropdown from "./components/dropdownEdit";
+import ProgressBarEdit from "./components/progressBarEdit";
 
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
@@ -117,7 +118,7 @@ export const ThisWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="right">
-          <InlineEdit
+          <ProgressBarEdit
             text={task.progress}
             onSetText={(text) => onModifyProgress(task.id, text)}
           />

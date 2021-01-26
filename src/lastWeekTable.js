@@ -11,7 +11,10 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
+import ProgressBarEdit from "./components/progressBarEdit";
+
 import useDropdown from "./components/dropdownEdit";
+
 import LinearProgressWithLabel from "./components/demo";
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
@@ -124,7 +127,10 @@ export const LastWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="right">
-          <LinearProgressWithLabel />
+          <ProgressBarEdit
+            text={task.progress}
+            onSetText={(text) => onModifyProgress(task.id, text)}
+          />
         </TableCell>
 
         <TableCell align="right">

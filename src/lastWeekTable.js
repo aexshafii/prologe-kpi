@@ -15,7 +15,6 @@ import ProgressBarEdit from "./components/progressBarEdit";
 
 import useDropdown from "./components/dropdownEdit";
 
-import LinearProgressWithLabel from "./components/demo";
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
 
@@ -146,7 +145,7 @@ export const LastWeekTable = ({ tasks }) => {
             onSetText={(text) => onModifyDate(task.id, text)}
           />
         </TableCell>
-
+        <button onClick={() => onDelete(task.id)}>x</button>
         <TableCell align="right"></TableCell>
       </TableRow>
     );

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import useKeypress from "../hooks/useKeypress";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
-import LinearProgressWithLabel from "./demo";
+import LinearProgressWithValueLabel from "./demo";
 
 function ProgressBarEdit(props) {
   const [isInputActive, setIsInputActive] = useState(false);
@@ -16,6 +16,8 @@ function ProgressBarEdit(props) {
   const esc = useKeypress("Escape");
 
   const { onSetText } = props;
+
+  console.log(props.text);
 
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
@@ -76,7 +78,9 @@ function ProgressBarEdit(props) {
           !isInputActive ? "active" : "hidden"
         }`}
       >
-        <LinearProgressWithLabel></LinearProgressWithLabel>{" "}
+        <LinearProgressWithValueLabel
+          progressPercentage={props.text}
+        ></LinearProgressWithValueLabel>{" "}
       </span>
       <input
         ref={inputRef}

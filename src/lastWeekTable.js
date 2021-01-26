@@ -145,8 +145,10 @@ export const LastWeekTable = ({ tasks }) => {
             onSetText={(text) => onModifyDate(task.id, text)}
           />
         </TableCell>
-        <button onClick={() => onDelete(task.id)}>x</button>
-        <TableCell align="right"></TableCell>
+
+        <TableCell align="right">
+          <button onClick={() => onDelete(task.id)}>x</button>
+        </TableCell>
       </TableRow>
     );
   }

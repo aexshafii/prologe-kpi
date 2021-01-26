@@ -112,7 +112,7 @@ export const LastWeekTable = ({ tasks }) => {
 
     return (
       <TableRow key={task.id} task={task}>
-        <TableCell scope="row">
+        <TableCell scope="row" width="200px">
           <InlineEdit
             text={task.taskName}
             onSetText={(text) => onModifyName(task.id, text)}
@@ -125,7 +125,7 @@ export const LastWeekTable = ({ tasks }) => {
             onSetText={(text) => onModifyQuantity(task.id, text)}
           />
         </TableCell>
-        <TableCell align="right">
+        <TableCell align="right" width="200px">
           <ProgressBarEdit
             text={task.progress}
             onSetText={(text) => onModifyProgress(task.id, text)}

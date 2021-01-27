@@ -11,7 +11,7 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
-import ProgressBarEdit from "./components/progressBarEdit";
+import ProgressBarEdit from "./components/manualProgressBarEdit";
 
 import useDropdown from "./components/dropdownEdit";
 

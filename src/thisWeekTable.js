@@ -12,11 +12,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
 import useDropdown from "./components/dropdownEdit";
-import ProgressBarEdit from "./components/progressBarEdit";
-
+import ProgressBarEdit from "./components/manualProgressBarEdit";
+import ProjectedProgressBarEdit from "./components/automaticProgressBarEdit";
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
-
+console.log(Date.now());
 const monthDay = new Date().getDate();
 const weekDay = new Date().getDay();
 const daysToSunday = 7 - weekDay;
@@ -29,14 +29,17 @@ const setDateToMidnight = (date) => {
 // Calculate this week section for UI
 let thisSunday = new Date();
 thisSunday.setDate(monthDay + daysToSunday);
-setDateToMidnight(thisSunday);
 
+setDateToMidnight(thisSunday);
 let thisMonday = new Date();
 thisMonday.setDate(monthDay - daysFromSunday);
 setDateToMidnight(thisMonday);
 
 thisMonday = thisMonday.getTime();
 thisSunday = thisSunday.getTime();
+console.log(thisSunday);
+let thisFriday = thisSunday - 86401000;
+console.log(thisFriday);
 
 export const ThisWeekTable = ({ tasks }) => {
   const onDelete = (id) => {
@@ -118,8 +121,8 @@ export const ThisWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="left" width="200px">
-          <ProgressBarEdit
-            text={task.progress}
+          <ProjectedProgressBarEdit
+            text={task.createdAt}
             onSetText={(text) => onModifyProgress(task.id, text)}
           />
         </TableCell>

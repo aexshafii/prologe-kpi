@@ -111,34 +111,34 @@ export const ThisWeekTable = ({ tasks }) => {
           />
         </TableCell>
 
-        <TableCell scope="row" align="right">
+        <TableCell scope="row" align="center">
           <InlineEdit
             text={task.quantity === "0" ? "n/a" : task.quantity}
             onSetText={(text) => onModifyQuantity(task.id, text)}
           />
         </TableCell>
-        <TableCell align="right" width="200px">
+        <TableCell align="left" width="200px">
           <ProgressBarEdit
             text={task.progress}
             onSetText={(text) => onModifyProgress(task.id, text)}
           />
         </TableCell>
 
-        <TableCell align="right">
+        <TableCell align="left">
           <PriorityDropdown></PriorityDropdown>
         </TableCell>
 
-        <TableCell align="right">
+        <TableCell align="left">
           <OwnerDropdown></OwnerDropdown>
         </TableCell>
-        <TableCell align="right">
+        <TableCell align="left">
           <InlineEdit
             text={task.taskDeadline}
             onSetText={(text) => onModifyDate(task.id, text)}
           />
         </TableCell>
 
-        <TableCell align="right">
+        <TableCell align="left">
           <button onClick={() => onDelete(task.id)}>x</button>
         </TableCell>
       </TableRow>
@@ -151,12 +151,12 @@ export const ThisWeekTable = ({ tasks }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Goal</TableCell>
-            <TableCell align="right">Quantity</TableCell>
-            <TableCell align="right">Progress made</TableCell>
-            <TableCell align="right">Priority</TableCell>
-            <TableCell align="right">Owner</TableCell>
-            <TableCell align="right">Due Date</TableCell>
-            <TableCell align="right"></TableCell>
+            <TableCell align="left">Quantity</TableCell>
+            <TableCell align="left">Progress</TableCell>
+            <TableCell align="left">Priority</TableCell>
+            <TableCell align="left">Owner</TableCell>
+            <TableCell align="left">Due Date</TableCell>
+            <TableCell align="left"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

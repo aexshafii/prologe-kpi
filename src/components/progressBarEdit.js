@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import useKeypress from "../hooks/useKeypress";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
-import LinearProgressWithValueLabel from "./demo";
+import LinearProgressWithValueLabel from "./manualProgressBar";
 
 function ProgressBarEdit(props) {
   const [isInputActive, setIsInputActive] = useState(false);

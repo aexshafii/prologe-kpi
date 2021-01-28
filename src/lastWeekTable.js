@@ -11,7 +11,8 @@ import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
-import ProgressBarEdit from "./components/progressBarEdit";
+import ProgressBarEdit from "./components/manualProgressBarEdit";
+import ProjectedProgressBarEdit from "./components/automaticProgressBarEdit";
 
 import useDropdown from "./components/dropdownEdit";
 
@@ -44,6 +45,10 @@ thisSunday = thisSunday.getTime();
 
 let lastMonday = thisMonday - 604800000;
 let lastSunday = thisSunday - 604800000;
+
+console.log(lastSunday);
+let lastFriday = lastSunday - 86401000;
+console.log(lastFriday);
 
 export const LastWeekTable = ({ tasks }) => {
   const onDelete = (id) => {
@@ -126,8 +131,12 @@ export const LastWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="left" width="200px">
-          <ProgressBarEdit
-            text={task.progress}
+          <ProgressBarEdit text={task.progress} />
+        </TableCell>
+
+        <TableCell align="left" width="200px">
+          <ProjectedProgressBarEdit
+            text={100}
             onSetText={(text) => onModifyProgress(task.id, text)}
           />
         </TableCell>
@@ -160,7 +169,9 @@ export const LastWeekTable = ({ tasks }) => {
           <TableRow>
             <TableCell align="left">Goal</TableCell>
             <TableCell align="left">Quantity</TableCell>
+
             <TableCell align="left">Progress</TableCell>
+            <TableCell align="left">Projected Progress</TableCell>
 
             <TableCell align="left">Priority</TableCell>
             <TableCell align="left">Owner</TableCell>

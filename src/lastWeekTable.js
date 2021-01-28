@@ -155,7 +155,12 @@ export const LastWeekTable = ({ tasks }) => {
           <ProjectedProgressBarEdit text={100} />
         </TableCell>
         <TableCell align="left">
-          <button onClick={() => onDelete(task.id)}>x</button>
+          <button
+            style={{ backgroundColor: "white" }}
+            onClick={() => onDelete(task.id)}
+          >
+            x
+          </button>
         </TableCell>
       </TableRow>
     );

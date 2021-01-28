@@ -141,14 +141,14 @@ export const ThisWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="left" width="200px">
-          <ProgressBarEdit text={task.progress} />
+          <ProgressBarEdit
+            text={task.progress}
+            onSetText={(text) => onModifyProgress(task.id, text)}
+          />
         </TableCell>
 
         <TableCell align="left" width="200px">
-          <ProjectedProgressBarEdit
-            text={projectedProgress}
-            onSetText={(text) => onModifyProgress(task.id, text)}
-          />
+          <ProjectedProgressBarEdit text={projectedProgress} />
         </TableCell>
 
         <TableCell align="left">

@@ -130,6 +130,20 @@ export const LastWeekTable = ({ tasks }) => {
             onSetText={(text) => onModifyQuantity(task.id, text)}
           />
         </TableCell>
+
+        <TableCell align="left">
+          <PriorityDropdown></PriorityDropdown>
+        </TableCell>
+
+        <TableCell align="left">
+          <OwnerDropdown></OwnerDropdown>
+        </TableCell>
+        <TableCell align="left" width="150px">
+          <InlineEdit
+            text={task.taskDeadline}
+            onSetText={(text) => onModifyDate(task.id, text)}
+          />
+        </TableCell>
         <TableCell align="left" width="200px">
           <ProgressBarEdit
             text={task.progress}
@@ -140,21 +154,6 @@ export const LastWeekTable = ({ tasks }) => {
         <TableCell align="left" width="200px">
           <ProjectedProgressBarEdit text={100} />
         </TableCell>
-
-        <TableCell align="left">
-          <PriorityDropdown></PriorityDropdown>
-        </TableCell>
-
-        <TableCell align="left">
-          <OwnerDropdown></OwnerDropdown>
-        </TableCell>
-        <TableCell align="left">
-          <InlineEdit
-            text={task.taskDeadline}
-            onSetText={(text) => onModifyDate(task.id, text)}
-          />
-        </TableCell>
-
         <TableCell align="left">
           <button onClick={() => onDelete(task.id)}>x</button>
         </TableCell>
@@ -169,13 +168,11 @@ export const LastWeekTable = ({ tasks }) => {
           <TableRow>
             <TableCell align="left">Goal</TableCell>
             <TableCell align="left">Quantity</TableCell>
-
-            <TableCell align="left">Progress</TableCell>
-            <TableCell align="left">Projected Progress</TableCell>
-
             <TableCell align="left">Priority</TableCell>
             <TableCell align="left">Owner</TableCell>
             <TableCell align="left">Due Date</TableCell>
+            <TableCell align="left">Progress</TableCell>
+            <TableCell align="left">Projected Progress</TableCell>
             <TableCell align="left"></TableCell>
           </TableRow>
         </TableHead>

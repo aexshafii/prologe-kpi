@@ -3,7 +3,7 @@ body {
 .App {
   font-family: sans-serif;
   text-align: left;
-  margin: 4rem 10rem;
+  margin: 75px;
 }
 
 /* these make sure it can work in any text element */

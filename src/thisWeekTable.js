@@ -181,7 +181,6 @@ export const ThisWeekTable = ({ tasks }) => {
             <TableCell align="left">Quantity</TableCell>
             <TableCell align="left">Progress</TableCell>
             <TableCell align="left">Projected Progress</TableCell>
-
             <TableCell align="left">Priority</TableCell>
             <TableCell align="left">Owner</TableCell>
             <TableCell align="left">Due Date</TableCell>

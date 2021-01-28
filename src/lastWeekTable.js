@@ -160,7 +160,7 @@ export const LastWeekTable = ({ tasks }) => {
           <TableRow>
             <TableCell align="left">Goal</TableCell>
             <TableCell align="left">Quantity</TableCell>
-            <TableCell align="left">Progress</TableCell>
+            <TableCell align="left">Progress made</TableCell>
 
             <TableCell align="left">Priority</TableCell>
             <TableCell align="left">Owner</TableCell>

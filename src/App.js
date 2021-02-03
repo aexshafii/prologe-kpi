@@ -39,19 +39,19 @@ export default function App() {
 
   const monthDay = new Date().getDate();
   const weekDay = new Date().getDay();
-  const daysToSunday = 7 - weekDay;
+  const daysToFriday = 5 - weekDay;
   const setDateToMidnight = (date) => {
     date.setHours(0, 0, 0, 0);
   };
 
   // Calculate this week section for UI
-  let thisSunday = new Date();
-  thisSunday.setDate(monthDay + daysToSunday);
-  setDateToMidnight(thisSunday);
-
-  let defaultInputDate = JSON.stringify(thisSunday);
-
+  let thisFriday = new Date();
+  thisFriday.setDate(monthDay + daysToFriday);
+  setDateToMidnight(thisFriday);
+  console.log(thisFriday);
+  let defaultInputDate = JSON.stringify(thisFriday);
   defaultInputDate = defaultInputDate.slice(1, 11);
+  console.log(defaultInputDate);
 
   const [newTaskDeadline, setNewTaskDeadline] = React.useState(
     defaultInputDate

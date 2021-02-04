@@ -10,6 +10,8 @@ import Alert from "react-bootstrap/Alert";
 
 import { LastWeekTable } from "./lastWeekTable.js";
 import { ThisWeekTable } from "./thisWeekTable.js";
+// preserves the timezone with ISO8601 string after JSON.stringify.
+import lbDate from "lbdate";
 
 firebase.initializeApp({
   // Your web app's Firebase configuration
@@ -32,6 +34,9 @@ export default function App() {
   const [newTaskOwner, setNewTaskOwner] = React.useState("laurent@prologe.io");
   const [newTaskPriority, setNewTaskPriority] = React.useState("High");
 
+  // preserves the timezone with ISO8601 string after JSON.stringify used on line 57
+  lbDate().init();
+
   // used to calculate weeks in tasks filtering
 
   let outOfWeek = new Date();
@@ -41,7 +46,7 @@ export default function App() {
   const weekDay = new Date().getDay();
   const daysToFriday = 5 - weekDay;
   const setDateToMidnight = (date) => {
-    date.setHours(0, 0, 0, 0);
+    date.setHours(23, 59, 59, 59);
   };
 
   // Calculate this week section for UI
@@ -50,6 +55,8 @@ export default function App() {
   setDateToMidnight(thisFriday);
   console.log(thisFriday);
   let defaultInputDate = JSON.stringify(thisFriday);
+
+  console.log(defaultInputDate);
   defaultInputDate = defaultInputDate.slice(1, 11);
   console.log(defaultInputDate);
 

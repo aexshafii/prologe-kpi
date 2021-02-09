@@ -14,6 +14,8 @@ import InlineEdit from "./components/inlineEdit";
 import useDropdown from "./components/dropdownEdit";
 import ProgressBarEdit from "./components/manualProgressBarEdit";
 import ProjectedProgressBarEdit from "./components/automaticProgressBarEdit";
+import SimpleModal from "./components/modal";
+
 let outOfWeek = new Date();
 outOfWeek.setDate(outOfWeek.getDate() + 7);
 console.log(Date.now());
@@ -113,11 +115,17 @@ export const ThisWeekTable = ({ tasks }) => {
     // Today's date in milliseconds
     let dateNow = Date.now();
     // Friday's date in milliseconds
-    let endDate = thisFriday;
-
+    let endDate = task.taskDeadline;
+    endDate = Date.parse(endDate);
+    console.log(startDate);
+    console.log(endDate);
     // 100% = 311085330
     // 1% = 31108533
+
     let hundredPercent = endDate - startDate;
+
+    console.log(hundredPercent);
+    console.log(endDate > startDate);
     // current %
     let currentPercentage = endDate - dateNow;
     // how many % is currentDate out of hundredPercent
@@ -148,6 +156,9 @@ export const ThisWeekTable = ({ tasks }) => {
         <TableCell align="left">
           <OwnerDropdown></OwnerDropdown>
         </TableCell>
+        <TableCell align="center">
+          <SimpleModal></SimpleModal>
+        </TableCell>
         <TableCell align="left" width="150px">
           <InlineEdit
             text={task.taskDeadline}
@@ -163,6 +174,7 @@ export const ThisWeekTable = ({ tasks }) => {
         <TableCell align="left" width="200px">
           <ProjectedProgressBarEdit text={projectedProgress} />
         </TableCell>
+
         <TableCell align="left">
           <button
             style={{ backgroundColor: "white" }}
@@ -185,6 +197,7 @@ export const ThisWeekTable = ({ tasks }) => {
             <TableCell align="left">Quantity</TableCell>
             <TableCell align="left">Priority</TableCell>
             <TableCell align="left">Owner</TableCell>
+            <TableCell align="left">Comments</TableCell>
             <TableCell align="left">Due Date</TableCell>
             <TableCell align="left">Progress</TableCell>
             <TableCell align="left">Projected Progress</TableCell>

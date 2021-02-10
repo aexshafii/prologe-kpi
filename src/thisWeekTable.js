@@ -175,7 +175,13 @@ export const ThisWeekTable = ({ tasks }) => {
           />
         </TableCell>
         <TableCell align="left" width="200px">
-          <ProjectedProgressBarEdit text={projectedProgress} />
+          <ProjectedProgressBarEdit
+            text={
+              projectedProgress < 100 && projectedProgress > 0
+                ? projectedProgress
+                : 100
+            }
+          />
         </TableCell>
 
         <TableCell align="left">

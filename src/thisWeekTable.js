@@ -135,6 +135,7 @@ export const ThisWeekTable = ({ tasks }) => {
     // convert decimal to XXX
     DeductibleProgress = DeductibleProgress * 100;
     let projectedProgress = 100 - DeductibleProgress;
+
     return (
       <TableRow key={task.id} task={task}>
         <TableCell scope="row" width="200px">
@@ -210,7 +211,8 @@ export const ThisWeekTable = ({ tasks }) => {
           {tasks
             .filter(
               (task) =>
-                thisMonday < task.createdAt && task.createdAt < thisSunday
+                thisMonday < Date.parse(task.taskDeadline) &&
+                Date.parse(task.taskDeadline) < thisSunday
             )
             .map((task) => (
               <TableRows task={task}></TableRows>

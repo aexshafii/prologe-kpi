@@ -191,7 +191,8 @@ export const LastWeekTable = ({ tasks }) => {
           {tasks
             .filter(
               (task) =>
-                lastMonday < task.createdAt && task.createdAt < lastSunday
+                lastMonday < Date.parse(task.taskDeadline) &&
+                Date.parse(task.taskDeadline) < lastSunday
             )
             .map((task) => (
               <TableRows task={task}></TableRows>

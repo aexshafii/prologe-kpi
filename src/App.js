@@ -94,6 +94,7 @@ export default function App() {
       taskOwner: newTaskOwner,
       progress: "0",
       priority: newTaskPriority,
+      comment: "Click to add comment",
     });
     // Check mark emoji animation
     setNewTaskAdded(true);

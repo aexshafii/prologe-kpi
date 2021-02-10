@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
+import InlineEdit from "./inlineEdit";
+import firebase from "firebase/app";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -30,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal() {
+export default function SimpleModal({ task }) {
+  console.log(task);
+
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -44,12 +48,20 @@ export default function SimpleModal() {
     setOpen(false);
   };
 
+  const onModifyComment = (id, text) => {
+    console.log(text);
+    const db = firebase.firestore();
+    db.collection("things").doc(id).update({ comment: text });
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
+      <h2 id="simple-modal-title">Comments</h2>
+      <br></br>
+      <InlineEdit
+        text={task.comment ? task.comment : "Click here to add a comment"}
+        onSetText={(text) => onModifyComment(task.id, text)}
+      />
     </div>
   );
 

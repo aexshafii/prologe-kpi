@@ -50,6 +50,7 @@ export const ThisWeekTable = ({ tasks }) => {
   };
 
   function TableRows({ task }) {
+    console.log(task);
     const onModifyProgress = (id, text) => {
       console.log(text);
       const db = firebase.firestore();
@@ -83,6 +84,7 @@ export const ThisWeekTable = ({ tasks }) => {
       const db = firebase.firestore();
       db.collection("things").doc(id).update({ taskDeadline: text });
     };
+
     // Dropdown for priority
     const priority_list = ["Low", "Medium", "High"];
     let taskPriority = task.priority;
@@ -157,7 +159,7 @@ export const ThisWeekTable = ({ tasks }) => {
           <OwnerDropdown></OwnerDropdown>
         </TableCell>
         <TableCell align="center">
-          <SimpleModal></SimpleModal>
+          <SimpleModal task={task}></SimpleModal>
         </TableCell>
         <TableCell align="left" width="150px">
           <InlineEdit

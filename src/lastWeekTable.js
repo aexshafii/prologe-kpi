@@ -13,6 +13,7 @@ import "./styles.css";
 import InlineEdit from "./components/inlineEdit";
 import ProgressBarEdit from "./components/manualProgressBarEdit";
 import ProjectedProgressBarEdit from "./components/automaticProgressBarEdit";
+import SimpleModal from "./components/modal";
 
 import useDropdown from "./components/dropdownEdit";
 
@@ -138,6 +139,9 @@ export const LastWeekTable = ({ tasks }) => {
         <TableCell align="left">
           <OwnerDropdown></OwnerDropdown>
         </TableCell>
+        <TableCell align="center">
+          <SimpleModal task={task}></SimpleModal>
+        </TableCell>
         <TableCell align="left" width="150px">
           <InlineEdit
             text={task.taskDeadline}
@@ -172,9 +176,11 @@ export const LastWeekTable = ({ tasks }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Goal</TableCell>
+
             <TableCell align="left">Quantity</TableCell>
             <TableCell align="left">Priority</TableCell>
             <TableCell align="left">Owner</TableCell>
+            <TableCell align="left">Comments</TableCell>
             <TableCell align="left">Due Date</TableCell>
             <TableCell align="left">Progress</TableCell>
             <TableCell align="left">Projected Progress</TableCell>
